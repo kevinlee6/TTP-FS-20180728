@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :authenticate_user
-  before_action :sanitize_page_params
+  before_action :sanitize_page_params, only: [:create]
   before_action :validate_affordability, only: [:create]
 
   def index

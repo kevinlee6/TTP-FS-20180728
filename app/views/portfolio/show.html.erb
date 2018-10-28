@@ -3,7 +3,7 @@
 <ul>
   <% @portfolio.owned_shares.each do |stock| %>
     <li>
-      <h3><%= stock.ticker %> | <%= stock.num_shares %></h3>
+      <h3><%= stock.ticker %> | <%= stock.num_shares %> | num_shares * some current value</h3>
     </li>
   <% end %>
 </ul>

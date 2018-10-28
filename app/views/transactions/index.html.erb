@@ -1,6 +1,8 @@
 <h1>Transactions</h1>
 <ul>
   <% @transactions.each do |transaction| %>
-    <li><%= transaction.ticker %> </li>
+    <li>
+      <%= transaction.ticker %> | Qty: <%= transaction.qty %> | PPS: <%= transaction.price_per_share %>
+    </li>
   <% end %>
 </ul>
