@@ -31,15 +31,6 @@ class TransactionsController < ApplicationController
     portfolio
   end
 
-  def get_stock_price(ticker)
-    begin
-      IEX::Resources::Price.get(params[:ticker])
-    rescue Exception => e
-      puts e
-      nil
-    end
-  end
-
   def validate_affordability
     @stock_price = get_stock_price(params[:ticker])
     return false if @stock_price.nil?
