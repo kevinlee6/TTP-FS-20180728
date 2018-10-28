@@ -1,4 +1,6 @@
 class TransactionsController < ApplicationController
+  before_filter :sanitize_page_params
+
   def index
     @transactions = current_user.transactions
   end
@@ -16,6 +18,11 @@ class TransactionsController < ApplicationController
   def transaction_params
     # look into require before permit
     params.permit(:ticker, :qty, :price_per_share)
+  end
+
+  def sanitize_page_params
+    params[:qty] = params[:qty].to_i
+    params[:price_per_share] = params[:price_per_share].to_f
   end
 
   def update_portfolio(ticker, qty)
