@@ -4,3 +4,12 @@
     <li><%= stock.ticker %></li>
   <% end %>
 </ul>
+
+<div class="trade-container">
+  <%= form_with url: transactions_path do |f| %>
+    <%= f.text_field :ticker %>
+    <%= f.number_field :qty %>
+    <%= f.number_field :price_per_share %>
+    <%= f.submit 'Create' %>
+  <% end %>
+</div>
