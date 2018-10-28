@@ -1,7 +1,9 @@
 <h1>Portfolio</h1>
 <ul>
   <% @portfolio.owned_shares.each do |stock| %>
-    <li><%= stock.ticker %></li>
+    <li>
+      <h3><%= stock.ticker %> | <%= stock.num_shares %></h3>
+    </li>
   <% end %>
 </ul>
 
