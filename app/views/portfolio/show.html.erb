@@ -3,7 +3,7 @@
 <ul>
   <% @portfolio.owned_shares.each do |stock| %>
     <li>
-      <h3><%= stock.ticker %> | <%= stock.num_shares %> | num_shares * some current value</h3>
+      <h3><%= stock.ticker %> | <%= stock.num_shares %> | <%= %></h3>
     </li>
   <% end %>
 </ul>
@@ -15,9 +15,6 @@
 
     <%= f.label :qty %>
     <%= f.number_field :qty %>
-
-    <%= f.label :price_per_share %>
-    <%= f.number_field :price_per_share %>
 
     <%= f.submit 'Create' %>
   <% end %>

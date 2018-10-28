@@ -14,6 +14,8 @@ class TransactionsController < ApplicationController
 
   private
   def update_portfolio(ticker:, qty:)
+    # silent error, fix later
+    return portfolio if @stock_price.nil?
     target_share = OwnedShare.find_by(ticker: ticker, portfolio_id: portfolio.id)
     if target_share
       num_shares_updated = target_share.num_shares + qty
@@ -29,7 +31,18 @@ class TransactionsController < ApplicationController
     portfolio
   end
 
+  def get_stock_price(ticker)
+    begin
+      IEX::Resources::Price.get(params[:ticker])
+    rescue Exception => e
+      puts e
+      nil
+    end
+  end
+
   def validate_affordability
+    @stock_price = get_stock_price(params[:ticker])
+    return false if @stock_price.nil?
     portfolio.balance >= purchase_amt
   end
 
@@ -44,7 +57,8 @@ class TransactionsController < ApplicationController
   end
 
   def purchase_amt
-    params[:qty] * params[:price_per_share]
+    # params[:qty] * params[:price_per_share]
+    params[:qty] * @stock_price
   end
 
   def sanitize_page_params
