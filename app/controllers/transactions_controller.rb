@@ -16,7 +16,9 @@ class TransactionsController < ApplicationController
   def update_portfolio(ticker:, qty:)
     # silent error, fix later
     return portfolio if @stock_price.nil?
+
     target_share = OwnedShare.find_by(ticker: ticker, portfolio_id: portfolio.id)
+
     if target_share
       num_shares_updated = target_share.num_shares + qty
       target_share.update!(num_shares: num_shares_updated)
@@ -27,6 +29,7 @@ class TransactionsController < ApplicationController
         ticker: ticker
       )
     end
+
     update_balance
     portfolio
   end
@@ -48,7 +51,6 @@ class TransactionsController < ApplicationController
   end
 
   def purchase_amt
-    # params[:qty] * params[:price_per_share]
     params[:qty] * @stock_price
   end
 
