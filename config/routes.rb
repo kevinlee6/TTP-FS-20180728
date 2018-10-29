@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'portfolio#show'
+  root 'static_pages#index'
   resources :transactions, only: [:index, :create]
 end
