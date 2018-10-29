@@ -1,2 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700');
 @import 'bootstrap';
+@import 'rails_bootstrap_forms';
+@import 'variables';
+@import "./partials/*";
 
+body {
+  font-family: $primary-font, sans-serif;
+}
+
+.main-content {
+  min-height: 85vh;
+}
+
+a {
+  color: white;
+  
+  &:hover {
+    text-decoration: none;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+}

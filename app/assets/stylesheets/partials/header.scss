@@ -1,0 +1,31 @@
+.main-header-container {
+  background-color: $layout-color;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// .main-header {
+//   width: 95%;
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// BEGIN overwrite bootstrap navbar props
+.navbar {
+  width: 95%;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+}
+// END overwrite bootstrap navbar
+
+.span-stock {
+  color: $secondary-color;
+}
+
+.span-dock {
+  color: $primary-color;
+}

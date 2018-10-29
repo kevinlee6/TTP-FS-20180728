@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Stocks</title>
+    <title>StockDock: Stock Portfolio App</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,54 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class='main-header-container'>
+      <%# <header class='main-header'>
+        <h1>
+          <a href="/">
+            <span class='span-stock'>Stock</span><span class='span-dock'>Dock</span>
+          </a>
+        </h1>
+        <nav>
+
+        </nav>
+      </header> %>
+      <nav class='navbar navbar-expand-sm'>
+        <a href="/" class="navbar-brand">
+            <span class='span-stock'>Stock</span><span class='span-dock'>Dock</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <main class='main-content'>
+      <%= yield %>
+    </main>
+
+    <footer class='main-footer'>
+    </footer>
   </body>
 </html>
