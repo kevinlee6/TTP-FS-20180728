@@ -5,7 +5,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.4.2/css/all.css' integrity='sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns' crossorigin='anonymous'>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -14,7 +14,7 @@
     <div class='main-header-container'>
       <%# <header class='main-header'>
         <h1>
-          <a href="/">
+          <a href='/'>
             <span class='span-stock'>Stock</span><span class='span-dock'>Dock</span>
           </a>
         </h1>
@@ -23,30 +23,36 @@
         </nav>
       </header> %>
       <nav class='navbar navbar-expand-sm'>
-        <a href="/" class="navbar-brand">
+        <a href='/' class='navbar-brand'>
             <span class='span-stock'>Stock</span><span class='span-dock'>Dock</span>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
+        <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+          <i class='fas fa-bars'></i>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/signup">Sign Up <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Log In</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+          <ul class='navbar-nav ml-auto'>
+            <% if user_signed_in? %>
+              <li class='nav-item'>
+                <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+              </li>
+            <% else %>  
+              <li class='nav-item'>
+                <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+              </li>
+              <li class='nav-item'>
+                <%= link_to 'Log In', new_user_session_path, class: 'nav-link' %>
+              </li>
+            <% end %>
+            <li class='nav-item dropdown'>
+              <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                 Dropdown
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+              <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+                <a class='dropdown-item' href='#'>Action</a>
+                <a class='dropdown-item' href='#'>Another action</a>
+                <div class='dropdown-divider'></div>
+                <a class='dropdown-item' href='#'>Something else here</a>
               </div>
             </li>
           </ul>
@@ -54,9 +60,11 @@
       </nav>
     </div>
 
-    <main class='main-content'>
-      <%= yield %>
-    </main>
+    <div class='main-content-container'>
+      <main class='main-content'>
+        <%= yield %>
+      </main>
+    </div>
 
     <footer class='main-footer'>
     </footer>
