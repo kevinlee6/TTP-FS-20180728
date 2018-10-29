@@ -6,6 +6,7 @@ ruby '2.5.1'
 gem 'devise'
 gem 'iex-ruby-client'
 gem 'bootstrap', '~> 4.1.3'
+gem "bootstrap_form", ">= 4.0.0"
 
 gem 'rails', '~> 5.2.1'
 gem 'pg', '>= 0.18', '< 2.0'
