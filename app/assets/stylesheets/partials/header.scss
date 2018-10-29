@@ -1,6 +1,6 @@
 .main-header-container {
   background-color: $layout-color;
-  height: 8vh;
+  min-height: 8vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,10 +17,26 @@
   width: 95%;
 }
 
+.nav-link {
+  color: $secondary-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
 .navbar-brand {
   font-size: 2rem;
 }
 // END overwrite bootstrap navbar
+
+.fa-bars {
+  color: $secondary-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
 
 .span-stock {
   color: $secondary-color;
