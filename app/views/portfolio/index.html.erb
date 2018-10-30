@@ -1,4 +1,5 @@
 <h1>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h1>
+last updated: <%= @datetime %>
 <h2>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h2>
 
 <table class="table table-hover">
@@ -6,15 +7,25 @@
     <tr>
       <th scope="col">Symbol</th>
       <th scope="col">Shares</th>
-      <th scope="col">Quote</th>
+      <th scope="col">Price ($)</th>
+      <th scope="col">Change ($)</th>
     </tr>
   </thead>
   <tbody>
     <% @shares.each do |stock|%>
+      <% ticker = stock.ticker %>
+      <% quote = @quotes[ticker.to_sym] %>
+      <% latestPrice = quote.latest_price %>
+      <% change = (latestPrice - quote.open).floor(2) %>
+      <% color =
+          change > 0 ? 'increase' :
+          change < 0 ? 'decrease' :
+          'nochange'%>
       <tr>
-        <td><%= stock.ticker %></td>
+        <td class=<%= color %>><%= ticker %></td>
         <td><%= stock.num_shares %></td>
-        <td><%= number_to_currency(@quotes[stock.ticker.to_sym].latest_price, precision: 2) %></td>
+        <td class=<%= color %>><%= latestPrice.floor(2) %></td>
+        <td class=<%= color %>><%= change %></td>
       </tr>
     <% end %>
   </tbody>

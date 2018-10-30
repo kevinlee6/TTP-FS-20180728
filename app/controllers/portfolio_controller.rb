@@ -3,7 +3,7 @@ class PortfolioController < ApplicationController
     # only one portfolio per user at the moment
     @portfolio = current_user.portfolio
     @shares = @portfolio.owned_shares
-    @quotes = {} 
+    @quotes = {}
     @balance = 0
 
     # looks longer, but O(n) and accounts for balance
@@ -15,6 +15,9 @@ class PortfolioController < ApplicationController
         @balance += quote.latest_price
       end
     end
+
+    t = Time.now
+    @datetime = t.strftime('%I:%M:%S %p %b %d, %Y')
 
     # works, trial 2
     # @stock_prices = get_stock_prices(
