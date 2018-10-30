@@ -1,21 +1,21 @@
-<h1>Portfolio (<%= number_to_currency(@portfolio.balance, precision: 2) %>)</h1>
-<h2>Balance: <%= number_to_currency(@portfolio.balance, precision: 2) %></h2>
-<ul>
-  <% @portfolio.owned_shares.each do |stock| %>
-    <li>
-      <h3><%= stock.ticker %> | <%= stock.num_shares %> | <%= @stock_prices[stock.ticker.to_sym] %></h3>
-    </li>
-  <% end %>
-</ul>
+<h1>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h1>
+<h2>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h2>
 
-<div class="trade-container">
-  <%= form_with url: transactions_path do |f| %>
-    <%= f.label :ticker %>
-    <%= f.text_field :ticker %>
-
-    <%= f.label :qty %>
-    <%= f.number_field :qty %>
-
-    <%= f.submit 'Create' %>
-  <% end %>
-</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Symbol</th>
+      <th scope="col">Shares</th>
+      <th scope="col">Quote</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shares.each do |stock|%>
+      <tr>
+        <td><%= stock.ticker %></td>
+        <td><%= stock.num_shares %></td>
+        <td><%= number_to_currency(@stock_prices[stock.ticker.to_sym], precision: 2) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
