@@ -1,14 +1,7 @@
-<div class="authentication">
+<div class='authentication'>
   <h2>Log in</h2>
 
-  <%= bootstrap_form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
-    <%= f.email_field :email, autofocus: true, autocomplete: 'email' %>
-    <%= f.password_field :password , autocomplete: 'current-password' %>
-    <% if devise_mapping.rememberable? %>
-      <%= f.check_box :remember_me %>
-    <% end %>
-    <%= f.submit "Log In" %>
-  <% end %>
+  <%= render 'login' %>
 
-  <%= render "devise/shared/links" %>
+  <%= render 'devise/shared/links' %>
 </div>
