@@ -55,6 +55,12 @@
 
     <div class='main-content-container'>
       <main class='main-content'>
+        <% unless flash.empty? %>
+          <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+          <% end %>
+          <%= javascript_include_tag('alert') %>
+        <% end %>
         <%= yield %>
       </main>
     </div>

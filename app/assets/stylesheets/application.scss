@@ -25,3 +25,30 @@ a {
     opacity: 0.8;
   }
 }
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.alert {
+  animation: 3s fadeOut ease-in forwards;
+  z-index: 1000;
+  border-radius: 0;
+  color: white;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 8vh;
+  opacity: 0.9;
+  text-align: center;
+}
+
+
+.alert-notice {
+  background-color: green;
+}
+
+.alert-alert {
+  background-color: darkred;
+}
