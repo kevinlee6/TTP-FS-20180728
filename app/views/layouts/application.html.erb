@@ -12,16 +12,6 @@
 
   <body>
     <div class='main-header-container'>
-      <%# <header class='main-header'>
-        <h1>
-          <a href='/'>
-            <span class='span-stock'>Stock</span><span class='span-dock'>Dock</span>
-          </a>
-        </h1>
-        <nav>
-
-        </nav>
-      </header> %>
       <nav class='navbar navbar-expand-sm'>
         <a href='/' class='navbar-brand'>
             <span class='span-stock'>Stock</span><span class='span-dock'>Dock</span>
@@ -33,6 +23,9 @@
         <div class='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul class='navbar-nav ml-auto'>
             <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to 'Account', edit_user_registration_path, class: 'nav-link' %>
+              </li>
               <li class='nav-item'>
                 <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
               </li>
