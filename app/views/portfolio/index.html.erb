@@ -1,32 +1,61 @@
-<h1>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h1>
-last updated: <%= @datetime %>
-<h2>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h2>
+<%= stylesheet_link_tag '//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' %>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Symbol</th>
-      <th scope="col">Shares</th>
-      <th scope="col">Price ($)</th>
-      <th scope="col">Change ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @shares.each do |stock|%>
-      <% ticker = stock.ticker %>
-      <% quote = @quotes[ticker.to_sym] %>
-      <% latestPrice = quote.latest_price %>
-      <% change = (latestPrice - quote.open).floor(2) %>
-      <% color =
-          change > 0 ? 'increase' :
-          change < 0 ? 'decrease' :
-          'nochange'%>
-      <tr>
-        <td class=<%= color %>><%= ticker %></td>
-        <td><%= stock.num_shares %></td>
-        <td class=<%= color %>><%= latestPrice.floor(2) %></td>
-        <td class=<%= color %>><%= change %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-9">
+      <h2>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h2>
+      last updated: <%= @datetime %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Price ($)</th>
+            <th scope="col">Change ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @shares.each do |stock|%>
+            <% ticker = stock.ticker %>
+            <% quote = @quotes[ticker.to_sym] %>
+            <% latestPrice = quote.latest_price %>
+            <% change = (latestPrice - quote.open).floor(2) %>
+            <% color =
+                change > 0 ? 'increase' :
+                change < 0 ? 'decrease' :
+                'nochange'%>
+            <tr>
+              <td class=<%= color %>><%= ticker %></td>
+              <td><%= stock.num_shares %></td>
+              <td class=<%= color %>><%= latestPrice.floor(2) %></td>
+              <td class=<%= color %>><%= change %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-sm-3">
+      <h3>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h3>
+
+      <div class="trade-container">
+        <%= bootstrap_form_with(url: transactions_path) do |f| %>
+          <%= f.text_field :ticker, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 4, id: 'ticker' %>
+          
+          Price per share:
+          <p id='stock-price'></p>
+
+          Last updated:
+          <p id='last-updated'></p>
+
+          <%= f.number_field :qty, placeholder: 'Quantity of shares' %>
+
+          <%= f.submit 'Create' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag('//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js') %>
+<%= javascript_include_tag('portfolio') %>

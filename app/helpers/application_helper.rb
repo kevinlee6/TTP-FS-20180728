@@ -15,6 +15,15 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def get_stock_price(ticker)
+    begin
+      IEX::Resources::Price.get(ticker)
+    rescue Exception => e
+      puts e
+      nil
+    end
+  end
+
   def get_quote(ticker)
     begin
       IEX::Resources::Quote.get(ticker)
