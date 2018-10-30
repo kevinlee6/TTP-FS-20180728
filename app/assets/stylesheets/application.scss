@@ -4,10 +4,6 @@
 @import 'variables';
 @import "./partials/*";
 
-body {
-  font-family: $primary-font, sans-serif;
-}
-
 .main-content-container {
   display: flex;
   justify-content: center;
@@ -17,6 +13,7 @@ body {
 
 .main-content {
   width: 95vw;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
