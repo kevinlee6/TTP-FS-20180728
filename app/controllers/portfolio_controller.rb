@@ -1,5 +1,6 @@
 class PortfolioController < ApplicationController
-  def show
+  def index
+    # only one portfolio per user
     @portfolio = current_user.portfolio
     @stock_prices = get_stock_prices(
       @portfolio.owned_shares.map(&:ticker)
