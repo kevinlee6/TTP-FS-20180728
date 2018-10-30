@@ -1,7 +1,8 @@
 <div class='authentication'>
-  <h2>Sign up</h2>
+  <div class='btn-group'>
+    <%= link_to 'Sign Up', new_user_registration_path, class: 'active text-center' %>
+    <%= link_to 'Log In', new_user_session_path, class: 'text-center' %>
+  </div>
 
-  <%= render 'signup' %>
-
-  <%= render "devise/shared/links" %>
+  <%= render 'signup' %> 
 </div>
