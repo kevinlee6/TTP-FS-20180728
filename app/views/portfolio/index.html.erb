@@ -1,7 +1,7 @@
 <h1>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h1>
 <h2>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h2>
 
-<table class="table">
+<table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">Symbol</th>
@@ -14,7 +14,7 @@
       <tr>
         <td><%= stock.ticker %></td>
         <td><%= stock.num_shares %></td>
-        <td><%= number_to_currency(@stock_prices[stock.ticker.to_sym], precision: 2) %></td>
+        <td><%= number_to_currency(@quotes[stock.ticker.to_sym].latest_price, precision: 2) %></td>
       </tr>
     <% end %>
   </tbody>

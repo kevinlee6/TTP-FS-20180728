@@ -2,16 +2,18 @@ class PortfolioController < ApplicationController
   def index
     # only one portfolio per user at the moment
     @portfolio = current_user.portfolio
-    @stock_prices = {} 
-    @balance = 0
     @shares = @portfolio.owned_shares
+    @quotes = {} 
+    @balance = 0
 
     # looks longer, but O(n) and accounts for balance
     @shares.each do |share|
       ticker = share[:ticker]
-      price = get_stock_price(ticker)
-      @stock_prices[share.ticker.to_sym] = price 
-      @balance += price
+      quote = get_quote(ticker)
+      if quote
+        @quotes[ticker.to_sym] = quote
+        @balance += quote.latest_price
+      end
     end
 
     # works, trial 2
