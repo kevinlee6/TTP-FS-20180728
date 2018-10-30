@@ -4,7 +4,11 @@ u1 = User.create!(
   password: 'password'
 )
 
-u1.portfolio.owned_shares.create!(
-  ticker: 'AAPL',
-  num_shares: 12
-)
+tickers = %w[AAPL MSFT TSLA GOOG AMZN IBM S B AMD GE]
+
+tickers.each do |ticker|
+  u1.portfolio.owned_shares.create!(
+    ticker: ticker,
+    num_shares: rand(1..20) 
+  )
+end

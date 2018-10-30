@@ -1,5 +1,5 @@
-<h1>Portfolio</h1>
-<h2>Balance: <%= @portfolio.balance %></h2>
+<h1>Portfolio (<%= number_to_currency(@portfolio.balance, precision: 2) %>)</h1>
+<h2>Balance: <%= number_to_currency(@portfolio.balance, precision: 2) %></h2>
 <ul>
   <% @portfolio.owned_shares.each do |stock| %>
     <li>
