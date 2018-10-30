@@ -4,5 +4,5 @@
     <%= link_to 'Log In', new_user_session_path, class: 'text-center' %>
   </div>
 
-  <%= render 'signup' %> 
+  <%= render partial:'signup', locals: { border: 'signup-border' } %> 
 </div>

@@ -1,4 +1,4 @@
-<%= bootstrap_form_with(model: resource, as: resource_name, url: session_path(resource_name), class: 'login-border', local: true) do |f| %>
+<%= bootstrap_form_with(model: resource, as: resource_name, url: session_path(resource_name), class: "#{border}", local: true) do |f| %>
   <%= f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'Email address' %>
 
   <%= f.password_field :password , autocomplete: 'current-password', placeholder: 'Password' %>
