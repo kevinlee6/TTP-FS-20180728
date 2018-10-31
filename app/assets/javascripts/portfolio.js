@@ -1,20 +1,25 @@
 document.addEventListener('turbolinks:load', () => {
   $('.table').DataTable();
+
   $('#ticker').keyup(() => {
     const ticker = $('#ticker').val();
-    const price = $('#stock-price');
+    const price = $('#price-per-share');
+    if (ticker === '') {
+      price.val('');
+      return;
+    };
     const update = $('#last-updated');
     const date = new Date();
 
     fetch(`https://api.iextrading.com/1.0/stock/${ticker}/price`)
       .then(res => res.json())
       .then(res => {
-        price.text(`$${res.toFixed(2)}`);
+        price.val(`${res.toFixed(2)}`);
       })
       .catch(err => {
-        price.text('Symbol not valid.');
+        price.val('Symbol not valid.');
       });
     
-     update.text(date.toLocaleString());
+    update.text(date.toLocaleString());
   });
 });

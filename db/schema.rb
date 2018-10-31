@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2018_10_27_184050) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["portfolio_id"], name: "index_owned_shares_on_portfolio_id"
+    t.index ["ticker"], name: "index_owned_shares_on_ticker", unique: true
   end
 
   create_table "portfolios", force: :cascade do |t|

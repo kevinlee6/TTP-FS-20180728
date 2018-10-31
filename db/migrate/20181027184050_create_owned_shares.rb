@@ -7,5 +7,7 @@ class CreateOwnedShares < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    add_index :owned_shares, :ticker, unique: true
   end
 end

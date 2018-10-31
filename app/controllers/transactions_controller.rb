@@ -1,36 +1,21 @@
 class TransactionsController < ApplicationController
   before_action :sanitize_page_params, only: [:create]
+  before_action :validate_affordability, only: [:create]
 
   def index
     @transactions = current_user.transactions
   end
 
   def create
-    transaction = Transaction.new(transaction_params)
-    ticker = transaction.ticker
-    qty = transaction.qty
-    price = get_stock_price(ticker)
-    can_afford = validate_affordability(qty, price)
-
-    # if price is nil that means cannot afford
-    price = validate_affordability(ticker, qty)
-    return portfolio if price.nil?
-    puts transaction
-
-    if transaction.save
-      # current_user.transactions.create!(transaction_params)
-      update_portfolio(transaction.ticker, transaction.qty)
-    else
-    end
+    new_transaction = current_user.transactions.create!(transaction_params)
+    update_portfolio(ticker: params[:ticker], qty: params[:qty])
   end
 
   private
-  def update_portfolio(ticker, qty)
+  def update_portfolio(ticker:, qty:)
     # silent error, fix later
     return portfolio if @stock_price.nil?
-
     target_share = OwnedShare.find_by(ticker: ticker, portfolio_id: portfolio.id)
-
     if target_share
       num_shares_updated = target_share.num_shares + qty
       target_share.update!(num_shares: num_shares_updated)
@@ -41,13 +26,14 @@ class TransactionsController < ApplicationController
         ticker: ticker
       )
     end
-
     update_balance
     portfolio
   end
 
-  def validate_affordability(qty, price)
-    current_user.cash >= purchase_amt(qty, price)
+  def validate_affordability
+    @stock_price = get_stock_price(params[:ticker])
+    return false if @stock_price.nil?
+    current_user.cash >= purchase_amt
   end
 
   def update_balance
@@ -60,8 +46,9 @@ class TransactionsController < ApplicationController
     params.permit(:ticker, :qty, :price_per_share)
   end
 
-  def purchase_amt(qty, price)
-    qty * price
+  def purchase_amt
+    # params[:qty] * params[:price_per_share]
+    params[:qty] * @stock_price
   end
 
   def sanitize_page_params

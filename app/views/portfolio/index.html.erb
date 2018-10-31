@@ -38,21 +38,21 @@
     <div class="col-sm-3">
       <h3>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h3>
 
-      <div class="trade-container">
-        <%= bootstrap_form_with(url: transactions_path) do |f| %>
-          <%= f.text_field :ticker, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 4, id: 'ticker' %>
-          
-          Price per share:
-          <p id='stock-price'></p>
+      <%= bootstrap_form_with(url: transactions_path, id: 'buy') do |f| %>
+        <%= f.text_field :ticker, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 5, id: 'ticker', required: true %>
+        
+        Price per share:
+        <%= f.text_field :price_per_share, hide_label: true, id: 'price-per-share', placeholder: 'Enter symbol above', readonly: true %>
 
-          Last updated:
-          <p id='last-updated'></p>
+        Last updated:
+        <p id='last-updated'></p>
 
-          <%= f.number_field :qty, placeholder: 'Quantity of shares' %>
+        <%= f.number_field :qty, label: 'Quantity', placeholder: 'Quantity of shares', min: 1, required: true %>
 
-          <%= f.submit 'Create' %>
-        <% end %>
-      </div>
+        <%= f.submit 'Purchase' %>
+      <% end %>
+
+      <div id="errors"></div>
     </div>
   </div>
 </div>
