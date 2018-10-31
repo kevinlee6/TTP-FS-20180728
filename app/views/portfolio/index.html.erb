@@ -1,28 +1,30 @@
 <% content_for :head do %>
-  <meta name="turbolinks-cache-control" content="no-cache">
+  <meta name='turbolinks-cache-control' content='no-cache'>
 <% end %>
 
 <%= stylesheet_link_tag 'https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css' %>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-9">
-    <div class='portfolio-header'>
-      <h2>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h2>
-      <p>last updated: <%= Time.now.strftime('%D, %r') %></p>
-    </div>
-      <table class="table table-hover">
+<div class='container-fluid'>
+  <div class='row'>
+    <div class='col-sm-9'>
+      <div class='portfolio-header'>
+        <h2>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h2>
+        <p>last updated: <%= Time.now.strftime('%D, %r') %></p>
+      </div>
+      <table class='table table-hover'>
         <thead>
           <tr>
-            <th scope="col">Symbol</th>
-            <th scope="col">Shares</th>
-            <th scope="col">Price ($)</th>
-            <th scope="col">Change ($)</th>
+            <th scope='col'>Symbol</th>
+            <th scope='col'>Shares</th>
+            <th scope='col'>Price ($)</th>
+            <th scope='col'>Change ($)</th>
+            <th scope='col'>Total ($)</th>
           </tr>
         </thead>
         <tbody>
           <% @shares.each do |stock|%>
             <% ticker = stock.ticker %>
+            <% qty = stock.num_shares %>
             <% quote = @quotes[ticker.to_sym] %>
             <% latestPrice = quote.latest_price %>
             <% change = (latestPrice - quote.open).floor(2) %>
@@ -32,22 +34,23 @@
                 'nochange'%>
             <tr>
               <td id=<%= ticker %> class=<%= color %>><%= ticker %></td>
-              <td><%= stock.num_shares %></td>
+              <td><%= qty %></td>
               <td class=<%= color %>><%= '%.2f' % latestPrice %></td>
               <td class=<%= color %>><%= '%.2f' % change %></td>
+              <td class=<%= color %>><%= '%.2f' % (latestPrice * qty) %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
-    <div class="col-sm-3">
+    <div class='col-sm-3 transaction-menu'>
       <h3>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h3>
 
       <%= bootstrap_form_with(url: transactions_path, id: 'buy') do |f| %>
         <%= f.text_field :ticker, hidelabel: true, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 5, id: 'ticker', required: true %>
         
-        <%= button_tag 'Check Price', class: 'btn btn-primary btn-sm check-price-btn' %>
+        <%= button_tag 'Check Price', type: 'button', class: 'btn btn-primary btn-sm check-price-btn' %>
 
         <%= f.text_field :price_per_share, id: 'price-per-share', placeholder: 'Enter symbol above', readonly: true %>
 
@@ -57,12 +60,12 @@
 
         <%= f.number_field :total_price, id: 'total-price', disabled: true %>
 
-        <div class="center-btn">
+        <div class='center-btn'>
           <%= f.submit 'Purchase', class: 'btn btn-primary buy-btn' %>
         </div>
       <% end %>
 
-      <div id="errors"></div>
+      <div id='errors'></div>
     </div>
   </div>
 </div>

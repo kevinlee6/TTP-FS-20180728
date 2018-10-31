@@ -35,7 +35,8 @@ $(document).ready(() => {
     update.val(date.toLocaleString());
   }
 
-  $('.check-price-btn').click(() => {
+  $('.check-price-btn').click(e => {
+    e.preventDefault();
     getPrice();
   });
 
