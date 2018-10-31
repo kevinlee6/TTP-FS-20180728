@@ -16,9 +16,6 @@ class PortfolioController < ApplicationController
       end
     end
 
-    t = Time.now
-    @datetime = t.strftime('%I:%M:%S %p %b %d, %Y')
-
     # works, trial 2
     # @stock_prices = get_stock_prices(
     #   @portfolio.owned_shares.map(&:ticker)

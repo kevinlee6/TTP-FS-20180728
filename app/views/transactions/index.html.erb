@@ -1,9 +1,28 @@
-<h1>Transactions</h1>
-<ul>
-  <% @transactions.each do |transaction| %>
-    <li>
-      <%= transaction.updated_at %>
-      <%= transaction.ticker %> | Qty: <%= transaction.qty %> | PPS: <%= transaction.price_per_share %>
-    </li>
-  <% end %>
-</ul>
+<%= stylesheet_link_tag 'https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css' %>
+
+<h2>Transactions</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Date/Time</th>
+      <th scope="col">Ticker</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per share ($)</th>
+      <th scope='col'>Total ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction.updated_at.strftime('%D, %r') %></td>
+        <td><%= transaction.ticker %></td>
+        <td><%= transaction.qty %></td>
+        <td><%= '%.2f' % transaction.price_per_share %></td>
+        <td><%= '%.2f' % (transaction.qty * transaction.price_per_share) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= javascript_include_tag('https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js') %>
+<%= javascript_include_tag('transactions') %>

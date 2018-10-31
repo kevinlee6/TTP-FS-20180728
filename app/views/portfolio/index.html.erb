@@ -1,11 +1,11 @@
-<%= stylesheet_link_tag '//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' %>
+<%= stylesheet_link_tag 'https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css' %>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-9">
     <div class='portfolio-header'>
       <h2>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h2>
-      <p>last updated: <%= @datetime %></p>
+      <p>last updated: <%= Time.now.strftime('%D, %r') %></p>
     </div>
       <table class="table table-hover">
         <thead>
@@ -49,7 +49,7 @@
         Last updated:
         <p id='last-updated'></p>
 
-        <%= f.number_field :qty, label: 'Quantity', placeholder: 'Quantity of shares', min: 1, required: true %>
+        <%= f.number_field :qty, label: 'Quantity', placeholder: 'Quantity of shares', min: 1, max: 2**31 - 1, required: true %>
 
         <%= f.submit 'Purchase' %>
       <% end %>
