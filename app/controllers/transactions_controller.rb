@@ -14,25 +14,39 @@ class TransactionsController < ApplicationController
         'You have insufficient funds to make this purchase.'
     end
 
-    new_transaction = current_user.transactions.create!(transaction_params)
     update_portfolio(ticker: params[:ticker], qty: params[:qty])
-    new_transaction
+    current_user.transactions.create!(transaction_params)
+    # portfolio = current_user.portfolio
+    # @shares = portfolio.owned_shares
+    # @quotes = {}
+    # @balance = 0
+
+    # @shares.each do |share|
+    #   ticker = share[:ticker]
+    #   quote = get_quote(ticker)
+    #   if quote
+    #     qty = share[:num_shares]
+    #     @quotes[ticker.to_sym] = quote
+    #     @balance += quote.latest_price * qty 
+    #   end
+    # end
   end
 
   private
   def update_portfolio(ticker:, qty:)
     # silent error, fix later
     return portfolio if @stock_price.nil?
-    target_share = OwnedShare.find_by(ticker: ticker, portfolio_id: portfolio.id)
-    if target_share
-      num_shares_updated = target_share.num_shares + qty
-      target_share.update!(num_shares: num_shares_updated)
+    @target_share = OwnedShare.find_by(ticker: ticker, portfolio_id: portfolio.id)
+    if @target_share
+      num_shares_updated = @target_share.num_shares + qty
+      @target_share.update!(num_shares: num_shares_updated)
     else
-      OwnedShare.create!(
-        portfolio_id: portfolio.id,
-        num_shares: qty,
-        ticker: ticker
-      )
+      @target_share = 
+        OwnedShare.create!(
+          portfolio_id: portfolio.id,
+          num_shares: qty,
+          ticker: ticker
+        )
     end
     update_balance
     portfolio

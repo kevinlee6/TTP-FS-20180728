@@ -1,4 +1,12 @@
 <% if @error %>
   $('.errors').show();
   $('.errors').text('<%= @error %> Transaction cancelled.');
+<% else %>
+  $('.table').DataTable().row.add([
+    '<%= @target_share.ticker %>',
+    '<%= @target_share.num_shares %>',
+    '<%= @stock_price %>',
+    '<%= @target_share.ticker %>',
+    '<%= @target_share.num_shares * @stock_price %>'
+  ]).draw(false).node().classList.add('increase');
 <% end %>

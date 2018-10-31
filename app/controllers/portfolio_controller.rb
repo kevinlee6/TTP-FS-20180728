@@ -17,6 +17,12 @@ class PortfolioController < ApplicationController
       end
     end
 
+    # respond_to do |format|
+    #   format.html
+    #   format.json { render json: {shares: @shares, quotes: @quotes } }
+    # end
+    @shares
+
     # works, trial 2
     # @stock_prices = get_stock_prices(
     #   @portfolio.owned_shares.map(&:ticker)
