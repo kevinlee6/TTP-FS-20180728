@@ -1,8 +1,8 @@
 class PortfolioController < ApplicationController
   def index
     # only one portfolio per user at the moment
-    @portfolio = current_user.portfolio
-    @shares = @portfolio.owned_shares
+    portfolio = current_user.portfolio
+    @shares = portfolio.owned_shares
     @quotes = {}
     @balance = 0
 
@@ -11,8 +11,9 @@ class PortfolioController < ApplicationController
       ticker = share[:ticker]
       quote = get_quote(ticker)
       if quote
+        qty = share[:num_shares]
         @quotes[ticker.to_sym] = quote
-        @balance += quote.latest_price
+        @balance += quote.latest_price * qty 
       end
     end
 

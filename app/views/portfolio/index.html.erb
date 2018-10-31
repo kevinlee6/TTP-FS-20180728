@@ -51,10 +51,11 @@
 
         <%= f.text_field :price_per_share, id: 'price-per-share', placeholder: 'Enter symbol above', readonly: true %>
 
-        Last updated:
-        <p id='last-updated'>N/A</p>
+        <%= f.text_field :last_updated, id: 'last-updated', placeholder: 'N/A', disabled: true %>
 
         <%= f.number_field :qty, label: 'Quantity', placeholder: 'Quantity of shares', value: 1, min: 1, max: 2**31 - 1, required: true %>
+
+        <%= f.number_field :total_price, id: 'total-price', disabled: true %>
 
         <div class="center-btn">
           <%= f.submit 'Purchase', class: 'btn btn-primary buy-btn' %>

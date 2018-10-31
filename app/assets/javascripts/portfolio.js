@@ -5,12 +5,16 @@ $(document).ready(() => {
 
   const price = $('#price-per-share');
   const update = $('#last-updated');
+  const total = $('#total-price');
+  const qty = $('#qty');
+  const errorMsg = 'Symbol not valid.'
 
   const getPrice = () => {
     const ticker = $('#ticker').val();
     
     if (ticker === '') {
       price.val('');
+      total.val('');
       return;
     };
     
@@ -20,12 +24,15 @@ $(document).ready(() => {
       .then(res => res.json())
       .then(res => {
         price.val(`${res.toFixed(2)}`);
+        const amt = qty.val();
+        total.val(`${(res * amt).toFixed(2)}`);
       })
-      .catch(err => {
-        price.val('Symbol not valid.');
+      .catch(() => {
+        price.val(errorMsg);
+        total.val('');
       });
     
-    update.text(date.toLocaleString());
+    update.val(date.toLocaleString());
   }
 
   $('.check-price-btn').click(() => {
@@ -34,5 +41,16 @@ $(document).ready(() => {
 
   $('#ticker').keyup(() => {
     getPrice();
+  });
+
+  $('#qty').bind('keyup change', () => {
+    const currQty = qty.val();
+    const currPrice = price.val();
+    if (!currQty || currPrice === errorMsg) {
+      total.val('');
+      return;
+    }
+    const totalPrice = currQty * currPrice;
+    total.val(`${totalPrice.toFixed(2)}`);
   });
 });
