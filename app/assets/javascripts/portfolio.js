@@ -1,5 +1,7 @@
-document.addEventListener('turbolinks:load', () => {
-  $('.table').DataTable();
+$(document).ready(() => {
+  $('.table').DataTable({
+    'retrieve': true
+  });
 
   $('#ticker').keyup(() => {
     const ticker = $('#ticker').val();

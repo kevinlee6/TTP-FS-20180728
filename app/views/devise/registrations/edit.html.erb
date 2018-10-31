@@ -1,7 +1,9 @@
+<%= link_to "Back", :back, class: 'btn btn-secondary' %>
+
 <div class="authentication">
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-  <%= bootstrap_form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, local: true) do |f| %>
+  <%= bootstrap_form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: 'auth-edit', local: true) do |f| %>
     <%= f.text_field :name, autofocus: true, autocomplete: 'name', placeholder: 'Name' %>
 
     <%= f.email_field :email, autocomplete: 'email', placeholder: 'Email address' %>
@@ -16,13 +18,8 @@
 
     <%= f.password_field :current_password, autocomplete: 'current-password', label: 'Current password (needed to confirm changes)', placeholder: 'Current password' %>
 
-    <%= f.submit 'Update' %>
+    <div class="center-btn">
+      <%= f.submit 'Update', class: 'btn btn-primary' %>
+    </div>
   <% end %>
-
-
-  <h3>Cancel my account</h3>
-
-  <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-  <%= link_to "Back", :back %>
 </div>

@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+
 <%= stylesheet_link_tag 'https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css' %>
 
 <div class="container-fluid">
@@ -41,17 +45,20 @@
       <h3>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h3>
 
       <%= bootstrap_form_with(url: transactions_path, id: 'buy') do |f| %>
-        <%= f.text_field :ticker, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 5, id: 'ticker', required: true %>
+        <%= f.text_field :ticker, hidelabel: true, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 5, id: 'ticker', required: true %>
         
-        Price per share:
-        <%= f.text_field :price_per_share, hide_label: true, id: 'price-per-share', placeholder: 'Enter symbol above', readonly: true %>
+        <%= button_tag 'Check Price', class: 'btn btn-primary btn-sm check-price-btn' %>
+
+        <%= f.text_field :price_per_share, id: 'price-per-share', placeholder: 'Enter symbol above', readonly: true %>
 
         Last updated:
-        <p id='last-updated'></p>
+        <p id='last-updated'>N/A</p>
 
-        <%= f.number_field :qty, label: 'Quantity', placeholder: 'Quantity of shares', min: 1, max: 2**31 - 1, required: true %>
+        <%= f.number_field :qty, label: 'Quantity', placeholder: 'Quantity of shares', value: 1, min: 1, max: 2**31 - 1, required: true %>
 
-        <%= f.submit 'Purchase' %>
+        <div class="center-btn">
+          <%= f.submit 'Purchase', class: 'btn btn-primary' %>
+        </div>
       <% end %>
 
       <div id="errors"></div>

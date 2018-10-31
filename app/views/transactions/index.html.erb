@@ -1,7 +1,11 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+
 <%= stylesheet_link_tag 'https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css' %>
 
 <h2>Transactions</h2>
-<table class="table table-hover">
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">Date/Time</th>
