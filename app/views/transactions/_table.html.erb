@@ -1,0 +1,22 @@
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Date/Time</th>
+      <th scope="col">Ticker</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per share ($)</th>
+      <th scope='col'>Total ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction.updated_at.strftime('%D, %r') %></td>
+        <td><%= transaction.ticker %></td>
+        <td><%= transaction.qty %></td>
+        <td><%= '%.2f' % transaction.price_per_share %></td>
+        <td><%= '%.2f' % (transaction.qty * transaction.price_per_share) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

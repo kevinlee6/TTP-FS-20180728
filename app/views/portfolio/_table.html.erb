@@ -1,0 +1,35 @@
+<div class='portfolio-header'>
+  <h2>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h2>
+  <p>last updated: <%= Time.now.strftime('%D, %r') %></p>
+</div>
+<table class='table table-hover'>
+  <thead>
+    <tr>
+      <th scope='col'>Symbol</th>
+      <th scope='col'>Shares</th>
+      <th scope='col'>Price ($)</th>
+      <th scope='col'>Change ($)</th>
+      <th scope='col'>Total ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shares.each do |stock|%>
+      <% ticker = stock.ticker %>
+      <% qty = stock.num_shares %>
+      <% quote = @quotes[ticker.to_sym] %>
+      <% latestPrice = quote.latest_price %>
+      <% change = (latestPrice - quote.open).floor(2) %>
+      <% color =
+          change > 0 ? 'increase' :
+          change < 0 ? 'decrease' :
+          'nochange'%>
+      <tr>
+        <td id=<%= ticker %> class=<%= color %>><%= ticker %></td>
+        <td><%= qty %></td>
+        <td class=<%= color %>><%= '%.2f' % latestPrice %></td>
+        <td class=<%= color %>><%= '%.2f' % change %></td>
+        <td class=<%= color %>><%= '%.2f' % (latestPrice * qty) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
