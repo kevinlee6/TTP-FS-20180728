@@ -3,14 +3,17 @@ $(document).ready(() => {
     'retrieve': true
   });
 
-  $('#ticker').keyup(() => {
+  const price = $('#price-per-share');
+  const update = $('#last-updated');
+
+  const getPrice = () => {
     const ticker = $('#ticker').val();
-    const price = $('#price-per-share');
+    
     if (ticker === '') {
       price.val('');
       return;
     };
-    const update = $('#last-updated');
+    
     const date = new Date();
 
     fetch(`https://api.iextrading.com/1.0/stock/${ticker}/price`)
@@ -23,5 +26,13 @@ $(document).ready(() => {
       });
     
     update.text(date.toLocaleString());
+  }
+
+  $('.check-price-btn').click(() => {
+    getPrice();
+  });
+
+  $('#ticker').keyup(() => {
+    getPrice();
   });
 });
