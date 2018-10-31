@@ -3,7 +3,7 @@ class TransactionsController < ApplicationController
   before_action :validate_affordability, only: [:create]
 
   def index
-    @transactions = current_user.transactions
+    @transactions = current_user.transactions.order(created_at: :desc)
   end
 
   def create

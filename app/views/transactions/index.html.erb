@@ -2,6 +2,7 @@
 <ul>
   <% @transactions.each do |transaction| %>
     <li>
+      <%= transaction.updated_at %>
       <%= transaction.ticker %> | Qty: <%= transaction.qty %> | PPS: <%= transaction.price_per_share %>
     </li>
   <% end %>
