@@ -31,7 +31,7 @@
                 change < 0 ? 'decrease' :
                 'nochange'%>
             <tr>
-              <td class=<%= color %>><%= ticker %></td>
+              <td id=<%= ticker %> class=<%= color %>><%= ticker %></td>
               <td><%= stock.num_shares %></td>
               <td class=<%= color %>><%= '%.2f' % latestPrice %></td>
               <td class=<%= color %>><%= '%.2f' % change %></td>
