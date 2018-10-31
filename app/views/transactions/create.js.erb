@@ -1,3 +1,4 @@
 <% if @error %>
-  $('#errors').text('<%= @error %>')
+  $('.errors').show();
+  $('.errors').text('<%= @error %> Transaction cancelled.');
 <% end %>

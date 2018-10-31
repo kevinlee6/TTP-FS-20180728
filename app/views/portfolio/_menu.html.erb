@@ -1,17 +1,17 @@
 <h3>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h3>
 
-<%= bootstrap_form_with(url: transactions_path, id: 'buy') do |f| %>
-  <%= f.text_field :ticker, hidelabel: true, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 5, id: 'ticker', required: true %>
+<%= bootstrap_form_with(url: transactions_path, class: 'buy') do |f| %>
+  <%= f.text_field :ticker, hidelabel: true, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 5, class: 'ticker', required: true %>
   
   <%= button_tag 'Check Price', type: 'button', class: 'btn btn-primary btn-sm check-price-btn' %>
 
-  <%= f.text_field :price_per_share, id: 'price-per-share', placeholder: 'Enter symbol above', readonly: true %>
+  <%= f.text_field :price_per_share, class: 'price-per-share', placeholder: 'Enter symbol above', readonly: true %>
 
-  <%= f.text_field :last_updated, id: 'last-updated', placeholder: 'N/A', disabled: true %>
+  <%= f.text_field :last_updated, class: 'last-updated', placeholder: 'N/A', disabled: true %>
 
-  <%= f.number_field :qty, label: 'Quantity', placeholder: 'Quantity of shares', value: 1, min: 1, max: 2**31 - 1, required: true %>
+  <%= f.number_field :qty, class: 'qty', label: 'Quantity', placeholder: 'Quantity of shares', value: 1, min: 1, max: 2**31 - 1, required: true %>
 
-  <%= f.number_field :total_price, id: 'total-price', disabled: true %>
+  <%= f.number_field :total_price, class: 'total-price', disabled: true %>
 
   <div class='center-btn'>
     <%= f.submit 'Purchase', class: 'btn btn-primary buy-btn' %>

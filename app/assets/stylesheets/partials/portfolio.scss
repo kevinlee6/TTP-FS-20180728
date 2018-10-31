@@ -1,4 +1,4 @@
-#ticker {
+.ticker {
   text-transform: uppercase;
 }
 
@@ -32,4 +32,17 @@
   background-color: rgba(248, 248, 248, 0.5);
   padding: 2%;
   border-radius: 20px;
+}
+
+.errors {
+  display: none;
+  color: red;
+  margin-top: 3%;
+  padding: 3%;
+  border-radius: 10px;
+  background-color: rgba(248, 222, 222, 0.5);
+}
+
+.price-per-share {
+  cursor: default;
 }

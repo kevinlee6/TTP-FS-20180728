@@ -3,14 +3,18 @@ $(document).ready(() => {
     'retrieve': true
   });
 
-  const price = $('#price-per-share');
-  const update = $('#last-updated');
-  const total = $('#total-price');
-  const qty = $('#qty');
-  const errorMsg = 'Symbol not valid.'
+  const price = $('.price-per-share');
+  const update = $('.last-updated');
+  const total = $('.total-price');
+  const qty = $('.qty');
+  const errorMsg = 'Symbol not valid.';
+  const errors = $('.errors');
+
+  const hideErrors = () => errors.hide();
 
   const getPrice = () => {
-    const ticker = $('#ticker').val();
+    hideErrors();
+    const ticker = $('.ticker').val();
     
     if (ticker === '') {
       price.val('');
@@ -40,11 +44,12 @@ $(document).ready(() => {
     getPrice();
   });
 
-  $('#ticker').keyup(() => {
+  $('.ticker').keyup(() => {
     getPrice();
   });
 
-  $('#qty').bind('keyup change', () => {
+  $('.qty').bind('keyup change', () => {
+    hideErrors();
     const currQty = qty.val();
     const currPrice = price.val();
     if (!currQty || currPrice === errorMsg) {
