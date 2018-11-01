@@ -20,3 +20,53 @@
 .fa-folder-open {
   color: deepskyblue;
 }
+
+.landing-container {
+  background: white url('stocks-background.jpg') no-repeat center fixed;
+  background-size: cover;
+  position: absolute;
+  width: 100vw;
+  left: 0;
+  height: 92vh;
+  top: 8vh;
+}
+
+.landing {
+  background: rgba(233, 233, 233, 0.94);
+  border-radius: 20px;
+  position: inherit;
+  width: 90vw;
+  padding: 5vw;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.landing-info {
+  top: 70vh;
+
+  ul {
+    font-size: 1.5rem;
+  }
+}
+
+.landing-form {
+  top: 24vh;
+}
+
+@media (min-width: 992px) {
+  .landing {
+    padding: 3vw;
+  }
+
+  .landing-info {
+    top: 25vh;
+    left: 27vw;
+    width: 45vw; 
+  }
+
+  .landing-form {
+    width: 40vw;
+    top: 33%;
+    left: 75%;
+  }
+}
