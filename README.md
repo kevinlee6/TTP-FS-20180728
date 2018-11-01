@@ -1,4 +1,4 @@
-# [StockDock](https://stockdock.herokuapp.com/Manage)
+# [StockDock](https://stockdock.herokuapp.com)
 
 Manage your stock market portfolio.
 
