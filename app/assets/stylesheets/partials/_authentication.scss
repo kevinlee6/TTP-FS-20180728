@@ -3,9 +3,16 @@
   margin-top: 3vh;
 
   form {
-    background-color: rgba(232, 232, 232, 0.5);
+    background-color: rgba(180, 180, 180, 0.5);
     padding: 25px;
   }
+}
+
+.authentication-container {
+  padding: 3%;
+  background-color: rgba(222, 222, 222, 0.96);
+  margin: auto;
+  margin-top: 5%;
 }
 
 .auth-form-border {
@@ -22,7 +29,7 @@
   }
 
   .active {
-    background-color: rgba(232, 232, 232, 0.5);
+    background-color: rgba(180, 180, 180, 0.5);
     color: navy;
     cursor: default;
     pointer-events: none;
@@ -39,7 +46,11 @@
 }
 
 @media (min-width: 992px) {
+  .authentication-container {
+    width: 60vw;
+  }
+  
   .authentication{
-    width: 50%;
+    width: 50vw;
   }
 }

@@ -63,7 +63,13 @@
           <% end %>
           <%= javascript_include_tag('alert') %>
         <% end %>
-        <%= yield %>
+        <% if user_signed_in? %>
+          <%= yield %>
+        <% else %>
+          <div class='not-logged-in-container'>
+            <%= yield %>
+          </div>
+        <% end %>
       </main>
     </div>
 

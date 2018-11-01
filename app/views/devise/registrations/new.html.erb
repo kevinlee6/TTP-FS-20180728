@@ -1,8 +1,10 @@
-<div class='authentication'>
-  <div class='btn-group'>
-    <%= link_to 'Sign Up', new_user_registration_path, class: 'active text-center' %>
-    <%= link_to 'Log In', new_user_session_path, class: 'text-center' %>
-  </div>
+<div class="authentication-container auth-form-border">
+  <div class='authentication'>
+    <div class='btn-group'>
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'active text-center' %>
+      <%= link_to 'Log In', new_user_session_path, class: 'text-center' %>
+    </div>
 
-  <%= render partial:'signup', locals: { border: 'signup-border' } %> 
+    <%= render partial:'signup', locals: { border: 'signup-border' } %> 
+  </div>
 </div>
