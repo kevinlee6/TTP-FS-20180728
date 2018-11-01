@@ -1,6 +1,6 @@
 $('.message')
   .show()
-  .text('<%= @error ? @error : @success %>'); 
+  .html('<%= @errors.length > 0 ? @errors.join('<br /><br />').html_safe : @success %>'); 
 
 <% if @success %>
   $('.message').removeClass('message-error');

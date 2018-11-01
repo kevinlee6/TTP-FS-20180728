@@ -1,18 +1,14 @@
 class TransactionsController < ApplicationController
   before_action :sanitize_page_params, only: [:create]
+  before_action :validate_params, only: [:create]
 
   def index
     @transactions = current_user.transactions.order(created_at: :desc)
   end
 
   def create
-    can_afford = validate_affordability
-
-    unless can_afford
-      return @error = "#{can_afford.nil? ?
-        'There is no stock with that ticker symbol, or there is a server problem.' :
-        'You have insufficient funds to make this purchase.'} Transaction cancelled."
-    end
+    return @errors if @errors.length > 0
+    
     amt = params[:qty]
     @success = "Transaction successful. You have bought #{amt} share#{amt > 1 ? 's' : ''} of #{params[:ticker]}."
 
@@ -27,11 +23,49 @@ class TransactionsController < ApplicationController
     @shares.each do |share|
       ticker = share[:ticker]
       qty = share[:num_shares]
-      @balance += @info[ticker]['price'] * qty
+      @balance += @info[ticker]['price'].to_f * qty
     end
+
+    @balance = @balance.floor(2)
   end
 
   private
+  def validate_params
+    @errors = []
+
+    # Validate quantity
+    unless params[:qty].between?(1, 2**31-1)
+      @errors << 'That is not a valid quantity.'
+    end
+
+    # Validate existence (ticker)
+    @price = get_price(params[:ticker])
+    if @price.zero?
+      @errors << 'There is no stock with that ticker symbol, or there is a server problem.'
+      return @errors
+    end
+
+    # Validate price
+    frontend_price = params[:price_per_share]
+    margin = frontend_price / @price
+    # If what the user sees is greater than current pricing, it will go through.
+    # Otherwise allow a 5% margin on pricing based on current price.
+    within_bounds = margin >= 0.95
+    unless within_bounds
+      @errors << 'The price listed on your screen did not match the current price. You may need to pull the most current price.'
+    end
+
+    unless validate_affordability?
+      @errors << 'There is insufficient funds in your account to complete this transaction.'
+    end
+
+    if @errors.length > 0
+      @errors << 'No transaction has been made.'
+    end
+
+    @errors
+  end
+
   def update_portfolio(ticker:, qty:)
     return portfolio if @price.zero?
 
@@ -53,9 +87,7 @@ class TransactionsController < ApplicationController
     portfolio
   end
 
-  def validate_affordability
-    @price = get_price(params[:ticker])
-    return nil if @price.zero?
+  def validate_affordability?
     current_user.cash >= purchase_amt
   end
 
