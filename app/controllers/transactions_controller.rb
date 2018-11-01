@@ -7,7 +7,13 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    return @errors if @errors.length > 0
+    if @errors.length > 0
+      respond_to do |format|
+        format.html { redirect_to portfolio_index_path, alert: @errors.join("\n") }
+        format.js
+      end
+      return @errors
+    end
     
     amt = params[:qty]
     @success = "Transaction successful. You have bought #{amt} share#{amt > 1 ? 's' : ''} of #{params[:ticker]}."
@@ -26,6 +32,11 @@ class TransactionsController < ApplicationController
     end
 
     @balance = @balance.floor(2)
+
+    respond_to do |format|
+      format.html { render action: 'create' }
+      format.js
+    end
   end
 
   private
