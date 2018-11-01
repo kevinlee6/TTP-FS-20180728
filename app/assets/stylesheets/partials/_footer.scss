@@ -1,0 +1,17 @@
+.main-footer {
+  background-color: $layout-color;
+  min-height: 6vh;
+  display: flex;
+  justify-content: center;
+}
+
+.social {
+  display: flex;
+  min-width: 40vw;
+  justify-content: space-around;
+  font-size: 3rem;
+
+  .fab {
+    color: $primary-color - #333;
+  }
+}
