@@ -1,6 +1,8 @@
 # [StockDock](https://stockdock.herokuapp.com/Manage)
 
-Manage your stock market portfolio. 
+Manage your stock market portfolio.
+
+![Example portfolio page](/public/example.png)
 
 ## Demo account
 
