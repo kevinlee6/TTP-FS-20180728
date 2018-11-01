@@ -18,7 +18,7 @@
       <% qty = share[:num_shares] %>
       <% info = @info[ticker] %>
       <% price = info['price'] %>
-      <% change = (price - info['ohlc']['open']['price']).floor(2) %>
+      <% change = (price - info['ohlc']['open']['price']).to_f.floor(2) %>
       <% color =
           change > 0 ? 'increase' :
           change < 0 ? 'decrease' :
