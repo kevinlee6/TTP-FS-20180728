@@ -9,6 +9,9 @@ gem 'bootstrap', '~> 4.1.3'
 gem 'bootstrap_form', '>= 4.0.0'
 gem 'jquery-rails'
 
+# Github vulnerability alert
+gem "loofah", ">= 2.2.3"
+
 gem 'rails', '~> 5.2.1'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
