@@ -1,10 +1,10 @@
 .authentication {
-  width: 50%;
   margin: auto;
+  margin-top: 3vh;
 
   form {
-    background-color: #eee;
-    padding: 3%;
+    background-color: rgba(232, 232, 232, 0.5);
+    padding: 25px;
   }
 }
 
@@ -22,7 +22,7 @@
   }
 
   .active {
-    background-color: #eee;
+    background-color: rgba(232, 232, 232, 0.5);
     color: navy;
     cursor: default;
     pointer-events: none;
@@ -30,11 +30,16 @@
   }
 }
 
-
 .signup-border {
   border-radius: 0 20px 20px 20px;
 }
 
 .login-border {
   border-radius: 20px 0 20px 20px;
+}
+
+@media (min-width: 992px) {
+  .authentication{
+    width: 50%;
+  }
 }
