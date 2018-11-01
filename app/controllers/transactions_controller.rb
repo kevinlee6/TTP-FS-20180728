@@ -36,7 +36,7 @@ class TransactionsController < ApplicationController
   def update_portfolio(ticker:, qty:)
     # silent error, fix later
     return portfolio if @stock_price.nil?
-    @target_share = OwnedShare.find_by(ticker: ticker, portfolio_id: portfolio.id)
+    @target_share = portfolio.owned_shares.find_by(ticker: ticker)
     if @target_share
       num_shares_updated = @target_share.num_shares + qty
       @target_share.update!(num_shares: num_shares_updated)
@@ -53,8 +53,9 @@ class TransactionsController < ApplicationController
   end
 
   def validate_affordability
-    @stock_price = get_stock_price(params[:ticker])
-    return nil if @stock_price.nil?
+    @price_and_open = get_price_and_ohlc(params[:ticker])
+    return nil if @price_and_open.nil?
+    @stock_price = @price_and_open[:price]
     current_user.cash >= purchase_amt
   end
 
@@ -64,12 +65,10 @@ class TransactionsController < ApplicationController
   end
 
   def transaction_params
-    # look into require before permit
     params.permit(:ticker, :qty, :price_per_share)
   end
 
   def purchase_amt
-    # params[:qty] * params[:price_per_share]
     params[:qty] * @stock_price
   end
 

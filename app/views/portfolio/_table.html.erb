@@ -1,6 +1,6 @@
 <div class='portfolio-header'>
-  <h2>Portfolio (<%= number_to_currency(@balance, precision: 2) %>)</h2>
-  <p>last updated: <%= Time.now.strftime('%D, %r') %></p>
+  <h2>Portfolio (<span class='portfolio-balance'><%= number_to_currency(@balance, precision: 2) %></span>)</h2>
+  <p>Last updated: <%= Time.now.strftime('%D, %r') %></p>
 </div>
 <table class='table table-hover'>
   <thead>
@@ -13,12 +13,12 @@
     </tr>
   </thead>
   <tbody>
-    <% @shares.each do |stock|%>
-      <% ticker = stock.ticker %>
-      <% qty = stock.num_shares %>
-      <% quote = @quotes[ticker.to_sym] %>
-      <% latestPrice = quote.latest_price %>
-      <% change = (latestPrice - quote.open).floor(2) %>
+    <% @shares.each do |share|%>
+      <% ticker = share[:ticker] %>
+      <% qty = share[:num_shares] %>
+      <% info = @info[ticker.to_sym] %>
+      <% price = info[:price] %>
+      <% change = (price - info[:open]).floor(2) %>
       <% color =
           change > 0 ? 'increase' :
           change < 0 ? 'decrease' :
@@ -26,9 +26,9 @@
       <tr>
         <td id=<%= ticker %> class=<%= color %>><%= ticker %></td>
         <td><%= qty %></td>
-        <td class=<%= color %>><%= '%.2f' % latestPrice %></td>
+        <td class=<%= color %>><%= '%.2f' % price %></td>
         <td class=<%= color %>><%= '%.2f' % change %></td>
-        <td class=<%= color %>><%= '%.2f' % (latestPrice * qty) %></td>
+        <td class=<%= color %>><%= '%.2f' % (price * qty) %></td>
       </tr>
     <% end %>
   </tbody>
