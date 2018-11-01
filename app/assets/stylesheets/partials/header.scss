@@ -18,6 +18,10 @@
   font-family: 'Raleway', sans-serif;
 }
 
+.navbar-nav {
+  font-size: 1.4rem;
+}
+
 .nav-link {
   color: $secondary-color;
 
@@ -27,7 +31,7 @@
 }
 
 .navbar-brand {
-  font-size: 2rem;
+  font-size: 2.4rem;
 }
 // END overwrite bootstrap navbar
 

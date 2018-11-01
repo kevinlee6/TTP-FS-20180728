@@ -1,4 +1,28 @@
 <% if user_signed_in? %>
+  <h1>Dashboard</h1>
+  <br>
+  <h2>Welcome back, <%= current_user.name %>!</h2>
+
+  <h3>Here are your latest 5 transactions:</h3>
+  <%= render 'transactions/table' %>
+
+  <div class="container quicklinks">
+    <div class='row'>
+      <div class='col'>
+        <h3>View all your transactions</h3>
+        <%= link_to transactions_path do %>
+          <i class="fas fa-search-dollar"></i>
+        <% end %>
+      </div>
+      <div class='col'>
+        <h3>Or jump straight to your portfolio</h3>
+        <%= link_to portfolio_index_path do %>
+          <i class="far fa-folder-open"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
 <% else %>
   <h2>Sign up today to get started</h2>
 

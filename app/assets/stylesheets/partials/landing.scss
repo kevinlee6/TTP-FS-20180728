@@ -1,0 +1,22 @@
+.quicklinks {
+  margin-top: 5vh;
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .fas, .far {
+      font-size: 12rem;
+      margin-top: 2vh;
+    }
+  }
+}
+
+.fa-search-dollar {
+  color: green;
+}
+
+.fa-folder-open {
+  color: deepskyblue;
+}
