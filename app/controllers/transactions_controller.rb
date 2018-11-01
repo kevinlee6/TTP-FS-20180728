@@ -17,8 +17,7 @@ class TransactionsController < ApplicationController
 
     @shares = portfolio.owned_shares
     @balance = 0
-
-    @info = get_batch_price_and_ohlc(@shares.map(&:ticker))
+    @info = construct_info_hash(@shares) 
 
     @shares.each do |share|
       ticker = share[:ticker]
@@ -112,5 +111,9 @@ class TransactionsController < ApplicationController
 
   def portfolio
     current_user.portfolio
+  end
+
+  def num_tickers_owned
+    portfolio.owned_shares.length
   end
 end

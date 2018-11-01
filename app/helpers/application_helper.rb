@@ -27,4 +27,28 @@ module ApplicationHelper
   def get_batch_price_and_ohlc(arr)
     JSON.parse(HTTParty.get("https://api.iextrading.com/1.0/stock/market/batch?symbols=#{arr.join(',')}&types=price,ohlc").body)
   end
+
+  def construct_info_hash(owned_shares)
+    # batch call only takes in 100 symbols max at a time
+    num_tickers_owned = owned_shares.length
+    num_api_calls = num_tickers_owned / 100 + 1
+    counter = 1
+    slice_start = 0
+
+    res = {}
+
+    while counter <= num_api_calls
+      slice_end = num_api_calls == counter ?
+         num_tickers_owned - 1 :
+         counter * 100 - 1
+
+      # might be able to optimize slice and map together
+      api_call = get_batch_price_and_ohlc(owned_shares.slice(slice_start..slice_end).map(&:ticker))
+      res.merge!(api_call)
+      counter += 1
+      slice_start += 100
+    end
+
+    res
+  end
 end
