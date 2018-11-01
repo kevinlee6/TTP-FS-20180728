@@ -2,11 +2,7 @@
   $('.errors').show();
   $('.errors').text('<%= @error %> Transaction cancelled.');
 <% else %>
-  $('.table').DataTable().row.add([
-    '<%= @target_share.ticker %>',
-    '<%= @target_share.num_shares %>',
-    '<%= @stock_price %>',
-    '<%= @target_share.ticker %>',
-    '<%= @target_share.num_shares * @stock_price %>'
-  ]).draw(false).node().classList.add('increase');
+  $('.user-cash').text('<%= number_to_currency(current_user.cash, precision: 2) %>');
+  $('.table-container').html('<%= j render 'portfolio/table' %>');
+  $('.table').DataTable().draw(false);
 <% end %>

@@ -1,4 +1,4 @@
-<h3>Balance: <%= number_to_currency(current_user.cash, precision: 2) %></h3>
+<h3>Balance: <span class='user-cash'><%= number_to_currency(current_user.cash, precision: 2) %></span></h3>
 
 <%= bootstrap_form_with(url: transactions_path, class: 'buy') do |f| %>
   <%= f.text_field :ticker, hidelabel: true, placeholder: 'Symbol', autocapitalize: 'characters', maxlength: 5, class: 'ticker', required: true %>

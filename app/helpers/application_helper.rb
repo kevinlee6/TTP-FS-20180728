@@ -17,21 +17,14 @@ module ApplicationHelper
 
   def get_price(ticker)
     begin
-      res = HTTParty.get("https://api.iextrading.com/1.0/stock/#{ticker}/price").body
+      HTTParty.get("https://api.iextrading.com/1.0/stock/#{ticker}/price").body.to_i
     rescue Exception => e
       puts e
       nil
     end
   end
 
-  def get_price_and_ohlc(ticker)
-    begin
-      res = HTTParty.get("https://api.iextrading.com/1.0/stock/#{ticker}/batch?types=price,ohlc").body
-      res = JSON.parse(res)
-      { price: res['price'], open: res['ohlc']['open']['price'] }
-    rescue Exception => e
-      puts e
-      nil
-    end
+  def get_batch_price_and_ohlc(arr)
+    JSON.parse(HTTParty.get("https://api.iextrading.com/1.0/stock/market/batch?symbols=#{arr.join(',')}&types=price,ohlc").body)
   end
 end

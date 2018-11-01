@@ -16,9 +16,9 @@
     <% @shares.each do |share|%>
       <% ticker = share[:ticker] %>
       <% qty = share[:num_shares] %>
-      <% info = @info[ticker.to_sym] %>
-      <% price = info[:price] %>
-      <% change = (price - info[:open]).floor(2) %>
+      <% info = @info[ticker] %>
+      <% price = info['price'] %>
+      <% change = (price - info['ohlc']['open']['price']).floor(2) %>
       <% color =
           change > 0 ? 'increase' :
           change < 0 ? 'decrease' :
