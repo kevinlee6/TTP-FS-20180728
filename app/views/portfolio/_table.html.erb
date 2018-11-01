@@ -1,5 +1,10 @@
 <div class='portfolio-header'>
   <h2>Portfolio (<span class='portfolio-balance'><%= number_to_currency(@balance, precision: 2) %></span>)</h2>
+  <%= form_with url: '/portfolio/refresh' do |f| %>
+    <button class='refresh'>
+      <i class="fas fa-sync-alt"></i>
+    </button>
+  <% end %>
   <p>Last updated: <%= Time.now.strftime('%D, %r') %></p>
 </div>
 <table class='table table-hover'>

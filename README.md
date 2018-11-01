@@ -2,7 +2,7 @@
 
 Manage your stock market portfolio. 
 
-Demo account
+## Demo account
 
 - Email: kevin@gmail.com
 - Password: password

@@ -6,9 +6,19 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  
-  h2 {
-    margin-right: 20px;
+}
+
+.refresh {
+  border: none;
+  border-radius: 30px;
+  margin: 0 20px;
+  padding: 10px;
+  cursor: pointer;
+  background: $layout-color;
+
+  .fa-sync-alt {
+    color: white;
+    font-size: 1.8rem;
   }
 }
 
