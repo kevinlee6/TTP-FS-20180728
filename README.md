@@ -1,24 +1,43 @@
-# README
+# StockDock
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Manage your stock market portfolio. 
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- Utilizes [IEX API](https://iextrading.com/developer/)
+  - Pull latest stock pricing and opening price
+- Create an account with an email and password
+- Starting balance of $5000
+- Search by stock symbol to obtain up-to-date pricing
+- Purchase stocks if there are available funds
+- View list of all transactions
+- View portfolio, which houses all owned shares
+  - Owned shares are color-coded to indicate daily performance
+    - Daily performance (change) is calculated by current pricing - opening price
+    - Green text indicates positive change
+    - Grey text indicates no change
+    - Red text indicates negative change
+- DataTables library provides server-sided pagination, in-table search, and sortable columns
 
-* System dependencies
+## Tech Stack
 
-* Configuration
+- Ruby on Rails
+- Bootstrap
+- JQuery
+- DataTables
 
-* Database creation
+## Database Design
 
-* Database initialization
+Database was designed around 4 models/tables.
 
-* How to run the test suite
+- User
+- Portfolio
+- Owned Shares
+- Transactions
 
-* Services (job queues, cache servers, search engines, etc.)
+The chain of command/ownership is illustrated
 
-* Deployment instructions
+## Notable Gems
 
-* ...
+- Devise: User authentication
+- HTTParty: Interact with IEX API
