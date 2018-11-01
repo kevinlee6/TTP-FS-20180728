@@ -9,10 +9,12 @@ class TransactionsController < ApplicationController
     can_afford = validate_affordability
 
     unless can_afford
-      return @error = can_afford.nil? ?
+      return @error = "#{can_afford.nil? ?
         'There is no stock with that ticker symbol, or there is a server problem.' :
-        'You have insufficient funds to make this purchase.'
+        'You have insufficient funds to make this purchase.'} Transaction cancelled."
     end
+    amt = params[:qty]
+    @success = "Transaction successful. You have bought #{amt} share#{amt > 1 ? 's' : ''} of #{params[:ticker]}."
 
     update_portfolio(ticker: params[:ticker], qty: params[:qty])
     current_user.transactions.create!(transaction_params)

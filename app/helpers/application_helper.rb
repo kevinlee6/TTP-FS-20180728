@@ -17,7 +17,7 @@ module ApplicationHelper
 
   def get_price(ticker)
     begin
-      HTTParty.get("https://api.iextrading.com/1.0/stock/#{ticker}/price").body.to_i
+      HTTParty.get("https://api.iextrading.com/1.0/stock/#{ticker}/price").body.to_f.floor(2)
     rescue Exception => e
       puts e
       nil

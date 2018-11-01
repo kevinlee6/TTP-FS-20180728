@@ -1,8 +1,14 @@
-<% if @error %>
-  $('.errors').show();
-  $('.errors').text('<%= @error %> Transaction cancelled.');
-<% else %>
+$('.message')
+  .show()
+  .text('<%= @error ? @error : @success %>'); 
+
+<% if @success %>
+  $('.message').removeClass('message-error');
+  $('.message').addClass('message-success');
   $('.user-cash').text('<%= number_to_currency(current_user.cash, precision: 2) %>');
   $('.table-container').html('<%= j render 'portfolio/table' %>');
   $('.table').DataTable().draw(false);
+<% else %>
+  $('.message').removeClass('message-success');
+  $('.message').addClass('message-error');
 <% end %>

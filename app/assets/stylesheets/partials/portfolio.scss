@@ -34,15 +34,27 @@
   border-radius: 20px;
 }
 
-.errors {
+.message {
   display: none;
-  color: red;
   margin-top: 3%;
   padding: 3%;
   border-radius: 10px;
+}
+
+.message-success {
+  color: green;
+  background-color: rgba(222, 248, 222, 0.5);
+}
+
+.message-error {
+  color: red;
   background-color: rgba(248, 222, 222, 0.5);
 }
 
 .price-per-share {
   cursor: default;
+}
+
+.total-price {
+  font-weight: bold;
 }
