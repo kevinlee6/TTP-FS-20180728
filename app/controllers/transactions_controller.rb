@@ -34,7 +34,7 @@ class TransactionsController < ApplicationController
     @balance = @balance.floor(2)
 
     respond_to do |format|
-      format.html { render action: 'create' }
+      format.html { redirect_to portfolio_index_path, notice: @success }
       format.js
     end
   end
