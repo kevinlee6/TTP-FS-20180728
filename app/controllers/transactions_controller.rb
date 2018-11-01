@@ -112,8 +112,4 @@ class TransactionsController < ApplicationController
   def portfolio
     current_user.portfolio
   end
-
-  def num_tickers_owned
-    portfolio.owned_shares.length
-  end
 end
