@@ -24,17 +24,19 @@
   </div>
 
 <% else %>
-  <div class='landing landing-info'>
-    <h1>Manage your stock portfolio</h1>
-    <ul>
-      <li>Buy and sell stocks from IEX stock exchange.</li>
-      <li>Get real-time pricing information with a click of a button.</li>
-      <li>Track your transaction history.</li>
-      <li>Filter owned stocks and transactions.</li>
-    </ul>
-  </div>
-  <div class='landing landing-form'>
-    <h1>Sign up today to get started</h1>
-    <%= render partial:'signup', locals: { border: '' } %>
+  <div class='landing-container row'>
+    <div class='landing landing-info col-sm-4'>
+      <h1>Manage your stock portfolio</h1>
+      <ul>
+        <li>Buy and sell stocks from IEX stock exchange.</li>
+        <li>Get real-time pricing information with a click of a button.</li>
+        <li>Track your transaction history.</li>
+        <li>Filter owned stocks and transactions.</li>
+      </ul>
+    </div>
+    <div class='landing landing-form col-sm-5'>
+      <h1>Sign up today to get started</h1>
+      <%= render partial:'signup', locals: { border: '' } %>
+    </div>
   </div>
 <% end %>

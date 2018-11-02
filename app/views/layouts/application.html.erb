@@ -66,9 +66,7 @@
         <% if user_signed_in? %>
           <%= yield %>
         <% else %>
-          <div class='not-logged-in-container'>
-            <%= yield %>
-          </div>
+          <%= yield %>
         <% end %>
       </main>
     </div>
