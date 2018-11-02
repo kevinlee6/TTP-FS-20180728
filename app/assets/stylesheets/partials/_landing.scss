@@ -21,12 +21,20 @@
   color: deepskyblue;
 }
 
+.not-signed-in-container {
+  width: 100vw;
+  background: white image-url('stocks-background.jpg') no-repeat center fixed;
+  background-size: cover; 
+}
+
 .landing-container {
+  margin: 0;
   justify-content: space-around;
 }
 
 .landing {
-  background: rgba(244, 244, 244, 0.5);
+  margin-top: 5vh;
+  background: rgba(244, 244, 244, 0.9);
   display: flex;
   flex-direction: column;
   padding: 3vh;
@@ -34,8 +42,9 @@
 }
 
 .landing-info {
-  align-items: center
-}
+  align-items: center;
 
-.landing-form {
+  ul {
+    font-size: 1.5rem;
+  }
 }

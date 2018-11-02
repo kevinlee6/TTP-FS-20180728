@@ -56,19 +56,21 @@
     </div>
 
     <div class='main-content-container'>
-      <main class='main-content'>
-        <% unless flash.empty? %>
-          <% flash.each do |key, value| %>
-            <div class="alert alert-<%= key %>"><%= value %></div>
-          <% end %>
-          <%= javascript_include_tag('alert') %>
+      <% unless flash.empty? %>
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
         <% end %>
-        <% if user_signed_in? %>
+        <%= javascript_include_tag('alert') %>
+      <% end %>
+      <% if user_signed_in? %>
+        <main class='main-content'>
           <%= yield %>
-        <% else %>
+        </main>
+      <% else %>
+        <div class='not-signed-in-container'>
           <%= yield %>
-        <% end %>
-      </main>
+        </div>
+      <% end %>
     </div>
 
     <%# May include later %>
