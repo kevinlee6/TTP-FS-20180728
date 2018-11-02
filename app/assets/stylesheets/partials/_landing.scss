@@ -24,12 +24,14 @@
 .not-signed-in-container {
   width: 100vw;
   background: white image-url('stocks-background.jpg') no-repeat center fixed;
-  background-size: cover; 
+  background-size: cover;
+  min-height: 92vh;
 }
 
 .landing-container {
   margin: 0;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .landing {
