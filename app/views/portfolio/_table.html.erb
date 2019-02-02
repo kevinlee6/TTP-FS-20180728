@@ -1,6 +1,6 @@
 <div class='portfolio-header'>
   <h2>Portfolio (<span class='portfolio-balance'><%= number_to_currency(@balance, precision: 2) %></span>)</h2>
-  <%= form_with url: '/portfolio/refresh' do |f| %>
+  <%= link_to portfolio_refresh_path, method: 'post', remote: true do %>
     <button class='refresh'>
       <i class="fas fa-sync-alt"></i>
     </button>
@@ -15,6 +15,7 @@
       <th scope='col'>Price ($)</th>
       <th scope='col'>Today's Return ($)</th>
       <th scope='col'>Total ($)</th>
+      <th scope='col'>Sell</th>
     </tr>
   </thead>
   <tbody>
@@ -34,6 +35,7 @@
         <td class=<%= color %>><%= '%.2f' % price %></td>
         <td class=<%= color %>><%= '%.2f' % change %></td>
         <td class=<%= color %>><%= '%.2f' % (price * qty) %></td>
+        <td><%= link_to '$', '/', class: 'btn btn-light', remote: true  %></td>
       </tr>
     <% end %>
   </tbody>

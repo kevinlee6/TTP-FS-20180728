@@ -1,6 +1,7 @@
 $(document).ready(() => {
   $('.table').DataTable({
     retrieve: true,
+    columnDefs: [{ orderable: false, targets: 5 }],
   });
 
   const price = $('.price-per-share');
