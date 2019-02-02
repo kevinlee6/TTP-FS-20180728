@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2019_02_02_192844) do
   end
 
 # Could not dump table "transactions" because of following StandardError
-#   Unknown type 'transaction_type' for column 'type'
+#   Unknown type 'transaction_method' for column 'method'
 
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false

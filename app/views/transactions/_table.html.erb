@@ -6,6 +6,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">Price per share ($)</th>
       <th scope='col'>Total ($)</th>
+      <th scope='col'>Type</th>
     </tr>
   </thead>
   <tbody>
@@ -16,6 +17,7 @@
         <td><%= transaction.qty %></td>
         <td><%= '%.2f' % transaction.price_per_share %></td>
         <td><%= '%.2f' % (transaction.qty * transaction.price_per_share) %></td>
+        <td><%= transaction.method.upcase %></td>
       </tr>
     <% end %>
   </tbody>
