@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_one :portfolio, dependent: :destroy
 
   validates_presence_of :name
+  validates_confirmation_of :password
   validates :cash, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   private
