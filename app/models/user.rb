@@ -3,13 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  validates_presence_of :name
-
+  after_create :build_portfolio
   has_many :transactions
   has_one :portfolio, dependent: :destroy
 
-  after_create :build_portfolio
+  validates_presence_of :name
+  validates :cash, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   private
   def build_portfolio
