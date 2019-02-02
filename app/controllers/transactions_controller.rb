@@ -115,7 +115,7 @@ class TransactionsController < ApplicationController
   end
 
   def sanitize_page_params
-    params[:ticker] = params[:ticker].upcase
+    params[:ticker].upcase!
     params[:qty] = params[:qty].to_i
     params[:price_per_share] = params[:price_per_share].to_f
   end
