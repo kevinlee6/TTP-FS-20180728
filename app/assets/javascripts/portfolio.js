@@ -1,6 +1,6 @@
 $(document).ready(() => {
   $('.table').DataTable({
-    'retrieve': true
+    retrieve: true,
   });
 
   const price = $('.price-per-share');
@@ -15,29 +15,31 @@ $(document).ready(() => {
   const getPrice = () => {
     hideErrors();
     const ticker = $('.ticker').val();
-    
+
     if (ticker === '') {
       price.val('');
       total.val('');
       return;
-    };
-    
+    }
+
     const date = new Date();
 
     fetch(`https://api.iextrading.com/1.0/stock/${ticker}/price`)
       .then(res => res.json())
-      .then(res => {
-        price.val(`${res.toFixed(2)}`);
-        const amt = qty.val();
-        total.val(`${(res * amt).toFixed(2)}`);
-      })
-      .catch(() => {
-        price.val(errorMsg);
-        total.val('');
-      });
-    
+      .then(
+        res => {
+          price.val(`${res.toFixed(2)}`);
+          const amt = qty.val();
+          total.val(`${(res * amt).toFixed(2)}`);
+        },
+        rej => {
+          price.val(errorMsg);
+          total.val('');
+        }
+      );
+
     update.val(date.toLocaleString());
-  }
+  };
 
   $('.check-price-btn').click(e => {
     e.preventDefault();

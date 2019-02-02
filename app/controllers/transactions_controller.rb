@@ -19,23 +19,32 @@ class TransactionsController < ApplicationController
     @success = "Transaction successful. You have bought #{amt} share#{amt > 1 ? 's' : ''} of #{params[:ticker]}."
 
     update_portfolio(ticker: params[:ticker], qty: params[:qty])
-    current_user.transactions.create!(transaction_params)
 
-    @shares = portfolio.owned_shares
-    @balance = 0
-    @info = construct_info_hash(@shares) 
+    transactions = current_user.transactions
+    transaction = transactions.new(transaction_params)
 
-    @shares.each do |share|
-      ticker = share[:ticker]
-      qty = share[:num_shares]
-      @balance += @info[ticker]['price'].to_f * qty
-    end
+    if transaction.save
+      @shares = portfolio.owned_shares
+      @balance = 0
+      @info = construct_info_hash(@shares) 
 
-    @balance = @balance.floor(2)
+      @shares.each do |share|
+        ticker = share[:ticker]
+        qty = share[:num_shares]
+        @balance += @info[ticker]['price'].to_f * qty
+      end
 
-    respond_to do |format|
-      format.html { redirect_to portfolio_index_path, notice: @success }
-      format.js
+      @balance = @balance.floor(2)
+
+      respond_to do |format|
+        format.html { redirect_to portfolio_index_path, notice: @success }
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to portfolio_index_path, notice: 'Error'}
+        format.js
+      end
     end
   end
 
@@ -107,7 +116,7 @@ class TransactionsController < ApplicationController
   end
 
   def transaction_params
-    params.permit(:ticker, :qty, :price_per_share)
+    params.permit(:ticker, :qty, :price_per_share, :method)
   end
 
   def purchase_amt
@@ -118,6 +127,8 @@ class TransactionsController < ApplicationController
     params[:ticker].upcase!
     params[:qty] = params[:qty].to_i
     params[:price_per_share] = params[:price_per_share].to_f
+    params[:commit].downcase!
+    params[:method] = params[:commit]
   end
 
   def portfolio
