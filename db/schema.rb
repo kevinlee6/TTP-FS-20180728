@@ -31,16 +31,8 @@ ActiveRecord::Schema.define(version: 2019_02_02_192844) do
     t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
 
-  create_table "transactions", force: :cascade do |t|
-    t.string "ticker", null: false
-    t.integer "qty", null: false
-    t.float "price_per_share", null: false
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "type", null: false
-    t.index ["user_id"], name: "index_transactions_on_user_id"
-  end
+# Could not dump table "transactions" because of following StandardError
+#   Unknown type 'transaction_type' for column 'type'
 
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false

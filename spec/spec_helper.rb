@@ -13,10 +13,25 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'capybara/rspec'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
+  config.before(:each) do |config|
+    stub_request(:get, "https://api.iextrading.com/1.0/stock/AAPL/price").
+      with(headers: {
+        'Accept'=>'*/*',
+        'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+        'Host'=>'api.iextrading.com',
+        'User-Agent'=>'Ruby'
+        }).
+      to_return(status: 200, body: "100", headers: {})
+  end
+
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
     # and `failure_message` of custom matchers include text for helper methods
