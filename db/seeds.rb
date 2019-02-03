@@ -18,6 +18,7 @@ tickers.each do |ticker|
     ticker: ticker,
     qty: qty,
     price_per_share: prices[ticker]['price'].to_f.floor(2) 
+    method: 'buy'
   )
   u1.portfolio.owned_shares.create!(
     ticker: ticker,
