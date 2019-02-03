@@ -9,6 +9,14 @@ class PortfolioController < ApplicationController
   def refresh
   end
 
+  def modal
+    ticker = params[:ticker]
+    @ticker = owned_shares.find_by ticker: ticker
+    if @ticker
+      @price_per_share = get_price(ticker)
+    end
+  end
+
   private
   def owned_shares
     current_user.portfolio.owned_shares

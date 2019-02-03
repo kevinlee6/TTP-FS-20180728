@@ -35,7 +35,7 @@
         <td class=<%= color %>><%= '%.2f' % price %></td>
         <td class=<%= color %>><%= '%.2f' % change %></td>
         <td class=<%= color %>><%= '%.2f' % (price * qty) %></td>
-        <td><%= link_to '$', '/', class: 'btn btn-light', remote: true  %></td>
+        <td><%= link_to '$', portfolio_modal_path, method: 'post', class: 'btn btn-light', remote: true, "data-toggle": "modal", "data-target": "#sell-modal", "data-params": {ticker: ticker}.to_param %></td>
       </tr>
     <% end %>
   </tbody>

@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   root 'static_pages#index'
   resources :portfolio, only: [:index]
   post '/portfolio/refresh', to: 'portfolio#refresh'
+  post '/portfolio/modal', to: 'portfolio#modal'
   resources :transactions, only: [:index, :create]
 end
