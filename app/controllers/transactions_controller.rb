@@ -1,12 +1,20 @@
 class TransactionsController < ApplicationController
   before_action :sanitize_page_params, only: [:create]
-  before_action :validate_params, only: [:create]
+  before_action :choose_method, only: [:create]
 
   def index
     @transactions = current_user.transactions.order(created_at: :desc)
   end
 
   def create
+    if @method == 'buy'
+      validate_params_buy
+    elsif @method == 'sell'
+      validate_params_sell
+    else
+      @errors = ['Unknown command: you may only buy or sell shares.']
+    end
+
     if @errors.length > 0
       respond_to do |format|
         format.html { redirect_to portfolio_index_path, alert: @errors.join("\n") }
@@ -16,7 +24,8 @@ class TransactionsController < ApplicationController
     end
     
     amt = params[:qty]
-    @success = "Transaction successful. You have bought #{amt} share#{amt > 1 ? 's' : ''} of #{params[:ticker]}."
+    action = @method == 'buy' ? 'bought' : 'sold'
+    @success = "Transaction successful. You have #{action} #{amt} share#{amt > 1 ? 's' : ''} of #{params[:ticker]}."
 
     update_portfolio(ticker: params[:ticker], qty: params[:qty])
 
@@ -49,7 +58,7 @@ class TransactionsController < ApplicationController
   end
 
   private
-  def validate_params
+  def validate_params_buy
     @errors = []
 
     # Validate quantity
@@ -88,9 +97,11 @@ class TransactionsController < ApplicationController
   def update_portfolio(ticker:, qty:)
     return portfolio if @price.zero?
 
-    @target_share = portfolio.owned_shares.find_by(ticker: ticker)
+    # it will be defined if method is sell, from validation; save query
+    @target_share = @owned_shares_to_sell || portfolio.owned_shares.find_by(ticker: ticker)
 
     if @target_share
+      qty = @method == 'buy' ? qty : -qty
       num_shares_updated = @target_share.num_shares + qty
       @target_share.update!(num_shares: num_shares_updated)
     else
@@ -106,12 +117,50 @@ class TransactionsController < ApplicationController
     portfolio
   end
 
+  def validate_params_sell
+    @errors = []
+    @owned_shares_to_sell = portfolio.owned_shares.find_by ticker: params[:ticker]
+
+    if !@owned_shares_to_sell
+      @errors << 'You do not own this share.'
+      return
+    end
+
+    # Validate quantity
+    unless params[:qty].between?(1, @owned_shares_to_sell.num_shares)
+      @errors << 'You do not own that many shares.'
+    end
+
+    # Validate existence (ticker)
+    @price = get_price(params[:ticker])
+    if @price.zero?
+      @errors << 'There is no stock with that ticker symbol, or there is a server problem.'
+      return @errors
+    end
+
+    # Validate price
+    frontend_price = params[:price_per_share]
+    margin = frontend_price / @price
+    # If what the user sees is greater than current pricing, it will go through.
+    # Otherwise allow a 5% margin on pricing based on current price.
+    within_bounds = margin >= 0.95
+    unless within_bounds
+      @errors << 'The price listed on your screen did not match the current price. You may need to pull the most current price.'
+    end
+
+    if @errors.length > 0
+      @errors << 'No transaction has been made.'
+    end
+
+    @errors
+  end
+
   def validate_affordability?
-    current_user.cash >= purchase_amt
+    current_user.cash >= transaction_amt
   end
 
   def update_balance
-    new_balance = current_user.cash - purchase_amt
+    new_balance = current_user.cash - transaction_amt
     current_user.update!(cash: new_balance)
   end
 
@@ -119,16 +168,27 @@ class TransactionsController < ApplicationController
     params.permit(:ticker, :qty, :price_per_share, :method)
   end
 
-  def purchase_amt
-    params[:qty] * @price
+  def transaction_amt
+    qty = @method == 'buy' ? params[:qty] : -params[:qty]
+    qty * @price
   end
 
   def sanitize_page_params
     params[:ticker].upcase!
     params[:qty] = params[:qty].to_i
     params[:price_per_share] = params[:price_per_share].to_f
-    params[:commit].downcase!
-    params[:method] = params[:commit]
+    params[:method] = params[:commit].downcase
+  end
+
+  def choose_method
+    method = params[:method]
+    if method == 'buy'
+      @method = 'buy'
+    elsif method == 'sell'
+      @method = 'sell'
+    else
+      @method = nil
+    end
   end
 
   def portfolio
