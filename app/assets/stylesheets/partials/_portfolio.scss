@@ -52,19 +52,22 @@
   border-radius: 20px;
 }
 
-.message {
+.message,
+.sell-message {
   display: none;
   margin-top: 3%;
   padding: 20px;
   border-radius: 10px;
 }
 
-.message-success {
+.message-success,
+.sell-message-success {
   color: green;
   background-color: rgba(222, 248, 222, 0.5);
 }
 
-.message-error {
+.message-error,
+.sell-message-error {
   color: red;
   background-color: rgba(248, 222, 222, 0.5);
 }

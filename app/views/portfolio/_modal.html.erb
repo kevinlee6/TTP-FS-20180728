@@ -22,8 +22,16 @@
 <div class="modal-footer mx-auto">
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 </div>
+<div class='sell-message sell-message-success'></div>
 
 <script>
+  $('.sell-qty').bind('keyup change', () => {
+    $('.errors').hide()
+    const sellQty = $('.sell-qty').val();
+    const sellPricePerShare = $('.sell-price-per-share').val();
+    const sellTotalPrice = sellQty * sellPricePerShare;
+    $('.sell-total-price').val(`${sellTotalPrice.toFixed(2)}`);
+  });
   $('.sell-qty').bind('keyup change', () => {
     const sellQty = $('.sell-qty').val();
     const sellPricePerShare = $('.sell-price-per-share').val();

@@ -103,7 +103,11 @@ class TransactionsController < ApplicationController
     if @target_share
       qty = @method == 'buy' ? qty : -qty
       num_shares_updated = @target_share.num_shares + qty
-      @target_share.update!(num_shares: num_shares_updated)
+      if num_shares_updated.zero?
+        @target_share.destroy
+      else
+        @target_share.update!(num_shares: num_shares_updated)
+      end
     else
       @target_share = 
         OwnedShare.create!(
@@ -122,7 +126,7 @@ class TransactionsController < ApplicationController
     @owned_shares_to_sell = portfolio.owned_shares.find_by ticker: params[:ticker]
 
     if !@owned_shares_to_sell
-      @errors << 'You do not own this share.'
+      @errors << 'You do not own this share. Try refreshing the page.'
       return
     end
 

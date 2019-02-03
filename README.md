@@ -14,9 +14,10 @@ Manage your stock market portfolio.
 - Utilizes [IEX API](https://iextrading.com/developer/)
   - Pull latest stock pricing and opening price
 - Create an account with an email and password
-- Starting balance of $5000
+- Starting balance of \$5000
 - Search by stock symbol to obtain up-to-date pricing
 - Purchase stocks if there are available funds
+- Sell stocks if available
 - View list of all transactions
 - View portfolio, which houses all owned shares
   - Owned shares are color-coded to indicate daily performance
@@ -52,7 +53,7 @@ The Transactions table is capable of calculating all the Owned Shares of a User.
 
 The reasoning behind a Portfolio table, as opposed to a direct relationship between User and Owned Shares, is because a User can potentially have more than one Portfolio to separate and organize their holdings. It may be implemented in the future.
 
-The price of a stock is pulled on the front-end so the user can view it before taking action. The price is also pulled on the back-end to validate if the current price is close to what the user saw. I chose a 5% margin since the stock market is constantly in flux during the time it's open. To mitigate this in the future, I could implement small fees to offset the difference along with a session timeout if idle for a certain period of time. 
+The price of a stock is pulled on the front-end so the user can view it before taking action. The price is also pulled on the back-end to validate if the current price is close to what the user saw. I chose a 5% margin since the stock market is constantly in flux during the time it's open. To mitigate this in the future, I could implement small fees to offset the difference along with a session timeout if idle for a certain period of time.
 
 ## Notable Gems/Libaries
 
