@@ -6,6 +6,11 @@ RSpec.describe "Transaction", type: :request do
   let(:created) { create(:user) }
 
   describe 'integration test' do
+    it 'index' do
+      login_as(created)
+      expect(get "/transactions").to eq(200)
+    end
+
     context 'create' do
       it 'buy' do
         params = {
