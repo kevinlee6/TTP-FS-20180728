@@ -4,10 +4,10 @@ Warden.test_mode!
 
 RSpec.describe "Transaction", type: :request do
   let(:created) { create(:user) }
+  before(:each) { login_as(created) }
 
   describe 'integration test' do
     it 'index' do
-      login_as(created)
       expect(get "/transactions").to eq(200)
     end
 
@@ -19,7 +19,6 @@ RSpec.describe "Transaction", type: :request do
           price_per_share: 100,
           commit: 'buy'
         }
-        login_as(created)
         res = post "/transactions", params: params
         expect { post "/transactions", params: params }.to change(Transaction, :count).by(+1)
       end
