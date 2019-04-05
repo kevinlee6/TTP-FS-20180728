@@ -21,15 +21,21 @@ RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
+  headers = {
+    'Accept'=>'*/*',
+    'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+    'User-Agent'=>'Ruby'
+  }
+
   config.before(:each) do |config|
-    stub_request(:get, "https://api.iextrading.com/1.0/stock/AAPL/price").
-      with(headers: {
-        'Accept'=>'*/*',
-        'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        'Host'=>'api.iextrading.com',
-        'User-Agent'=>'Ruby'
-        }).
-      to_return(status: 200, body: "100", headers: {})
+    stub_request(:get, "https://api.iextrading.com/1.0/stock/AAPL/price")
+      .with(headers: headers)
+      .to_return(status: 200, body: "100", headers: {})
+
+    sample_res = {"AAPL":{"price":196.73,"ohlc":{"open":{"price":196.41,"time":1554471000561},"close":{"price":195.69,"time":1554408000400},"high":197.1,"low":195.93}}}
+    stub_request(:get, "https://api.iextrading.com/1.0/stock/market/batch?symbols=AAPL&types=price,ohlc")
+        .with(headers: headers)
+        .to_return(status: 200, body: sample_res.to_json, headers: {})
   end
 
   config.expect_with :rspec do |expectations|
