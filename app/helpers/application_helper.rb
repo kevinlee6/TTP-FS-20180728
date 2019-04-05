@@ -25,6 +25,7 @@ module ApplicationHelper
   end
 
   def get_batch_price_and_ohlc(arr)
+    return {} if !arr || arr.length < 1
     JSON.parse(HTTParty.get("https://api.iextrading.com/1.0/stock/market/batch?symbols=#{arr.join(',')}&types=price,ohlc").body)
   end
 

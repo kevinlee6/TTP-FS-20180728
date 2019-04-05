@@ -3,8 +3,7 @@ include Warden::Test::Helpers
 Warden.test_mode!
 
 RSpec.describe "Transaction", type: :request do
-  let(:created) { create(:user) }
-  before(:each) { login_as(created) }
+  let!(:current_user) { login_as(create(:user)) }
 
   describe 'integration test' do
     it 'index' do
@@ -12,15 +11,15 @@ RSpec.describe "Transaction", type: :request do
     end
 
     context 'create' do
-      it 'buy' do
-        params = {
+      it 'buy then sell' do
+        PARAMS = {
           ticker: 'AAPL',
           qty: 1,
           price_per_share: 100,
           commit: 'buy'
         }
-        res = post "/transactions", params: params
-        expect { post "/transactions", params: params }.to change(Transaction, :count).by(+1)
+        expect { post "/transactions", params: PARAMS }.to change(Transaction, :count).by(+1)
+        expect { post "/transactions", params: PARAMS.merge(commit: 'sell') }.to change(Transaction, :count).by(+1)
       end
     end
   end
