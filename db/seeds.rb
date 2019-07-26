@@ -1,5 +1,9 @@
+API_PREFIX = 'https://cloud.iexapis.com/v1/stock'
+API_SUFFIX = "token=#{ENV['API_KEY']}"
 def get_batch_price(arr)
-  JSON.parse(HTTParty.get("https://api.iextrading.com/1.0/stock/market/batch?symbols=#{arr.join(',')}&types=price").body)
+  link = "#{API_PREFIX}/market/batch?symbols=#{arr.join(',')}&types=price&#{API_SUFFIX}"
+  data = HTTParty.get(link).body
+  JSON.parse(data)
 end
 
 tickers = %w[AAPL MSFT TSLA GOOG AMZN IBM S B AMD GE]

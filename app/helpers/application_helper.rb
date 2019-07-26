@@ -1,4 +1,6 @@
 module ApplicationHelper
+  API_PREFIX = 'https://cloud.iexapis.com/v1/stock'
+  API_SUFFIX = "token=#{ENV['API_KEY']}"
   def resource_name
     :user
   end
@@ -17,7 +19,9 @@ module ApplicationHelper
 
   def get_price(ticker)
     begin
-      HTTParty.get("https://api.iextrading.com/1.0/stock/#{ticker}/price").body.to_f.ceil(2)
+      link = "#{API}/#{ticker}/price&#{API_SUFFIX}"
+      data = HTTParty.get(link).body
+      data.to_f.ceil(2)
     rescue Exception => e
       puts e
       nil
@@ -26,7 +30,10 @@ module ApplicationHelper
 
   def get_batch_price_and_ohlc(arr)
     return {} if !arr || arr.length < 1
-    JSON.parse(HTTParty.get("https://api.iextrading.com/1.0/stock/market/batch?symbols=#{arr.join(',')}&types=price,ohlc").body)
+    types = %w[price, ohlc]
+    link = "#{API_PREFIX}/market/batch?symbols=#{arr.join(',')}&types=#{types.join}&#{API_SUFFIX}"
+    data = HTTParty.get(link).body
+    JSON.parse(data)
   end
 
   def construct_info_hash(owned_shares)
