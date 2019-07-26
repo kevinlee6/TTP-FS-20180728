@@ -40,7 +40,7 @@ class TransactionsController < ApplicationController
       @shares.each do |share|
         ticker = share[:ticker]
         qty = share[:num_shares]
-        @balance += @info[ticker]['price'].to_f * qty
+        @balance += @info.dig(ticker, 'quote', 'latestPrice').to_f * qty
       end
 
       @balance = @balance.floor(2)
