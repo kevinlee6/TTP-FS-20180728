@@ -19,9 +19,11 @@ module ApplicationHelper
 
   def get_price(ticker)
     begin
-      link = "#{API}/#{ticker}/price&#{API_SUFFIX}"
-      data = HTTParty.get(link).body
-      data.to_f.ceil(2)
+      link = "#{API_PREFIX}/#{ticker}/quote?#{API_SUFFIX}"
+      strData = HTTParty.get(link).body
+      data = JSON.parse(strData)
+      price = data.dig('latestPrice')
+      price.to_f.ceil(2)
     rescue Exception => e
       puts e
       nil
@@ -30,10 +32,11 @@ module ApplicationHelper
 
   def get_batch_price_and_ohlc(arr)
     return {} if !arr || arr.length < 1
-    types = %w[price, ohlc]
+    # Price and ohlc are premium features
+    types = %w[quote]
     link = "#{API_PREFIX}/market/batch?symbols=#{arr.join(',')}&types=#{types.join}&#{API_SUFFIX}"
-    data = HTTParty.get(link).body
-    JSON.parse(data)
+    strData = HTTParty.get(link).body
+    JSON.parse(strData)
   end
 
   def construct_info_hash(owned_shares)

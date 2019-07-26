@@ -1,62 +1,66 @@
 $(document).ready(() => {
-  $('.table').DataTable({
+  $(".table").DataTable({
     retrieve: true,
-    columnDefs: [{ orderable: false, targets: 5 }],
+    columnDefs: [{ orderable: false, targets: 5 }]
   });
 
-  const price = $('.price-per-share');
-  const update = $('.last-updated');
-  const total = $('.total-price');
-  const qty = $('.qty');
-  const errorMsg = 'Symbol not valid.';
-  const errors = $('.errors');
+  const API_PREFIX = "https://cloud.iexapis.com/v1/stock";
+  const API_SUFFIX = "token=pk_b39407374e9f40cd9ae9d082c95e7fd9";
+
+  const price = $(".price-per-share");
+  const update = $(".last-updated");
+  const total = $(".total-price");
+  const qty = $(".qty");
+  const errorMsg = "Symbol not valid.";
+  const errors = $(".errors");
 
   const hideErrors = () => errors.hide();
 
   const getPrice = () => {
     hideErrors();
-    const ticker = $('.ticker').val();
+    const ticker = $(".ticker").val();
 
-    if (ticker === '') {
-      price.val('');
-      total.val('');
+    if (ticker === "") {
+      price.val("");
+      total.val("");
       return;
     }
 
     const date = new Date();
 
-    fetch(`https://api.iextrading.com/1.0/stock/${ticker}/price`)
+    fetch(`${API_PREFIX}/${ticker}/quote?${API_SUFFIX}`)
       .then(res => res.json())
       .then(
         res => {
-          price.val(`${res.toFixed(2)}`);
+          const { latestPrice } = res;
+          price.val(`${latestPrice.toFixed(2)}`);
           const amt = qty.val();
-          total.val(`${(res * amt).toFixed(2)}`);
+          total.val(`${(latestPrice * amt).toFixed(2)}`);
         },
         rej => {
           price.val(errorMsg);
-          total.val('');
+          total.val("");
         }
       );
 
     update.val(date.toLocaleString());
   };
 
-  $('.check-price-btn').click(e => {
+  $(".check-price-btn").click(e => {
     e.preventDefault();
     getPrice();
   });
 
-  $('.ticker').keyup(() => {
+  $(".ticker").keyup(() => {
     getPrice();
   });
 
-  $('.qty').bind('keyup change', () => {
+  $(".qty").bind("keyup change", () => {
     hideErrors();
     const currQty = qty.val();
     const currPrice = price.val();
     if (!currQty || currPrice === errorMsg) {
-      total.val('');
+      total.val("");
       return;
     }
     const totalPrice = currQty * currPrice;
